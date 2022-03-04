@@ -1,13 +1,14 @@
-# visualdon-titanic
+# Titanic | Visualisation de données
 Projet de groupe Visualisation de données - Teo Dolci & Emile Vianney-Liaud
 
-# Contexte
+## Contexte
 d'où viennent les données, qui les a créées et dans quel contexte
+Les données que nous avons récupérées viennent du site "
 
-# Description 
+## Description 
 Comment sont structurées les données ? Parler du format, des attributs et du type de données
 
-# But
+## But
 qu'est-ce que vous voulez découvrir ? Des tendances ? Vous voulez explorer ou expliquer?
 Références
 

@@ -3,13 +3,21 @@ import * as d3 from 'd3';
 // C'est ici que vous allez écrire les premières lignes en d3!
 
 const body = d3.select("body");
+const margin = ({
+    top: 30,
+    right: 10,
+    bottom: 30,
+    left: 40,
+  });
 
 const maxWidth = window.innerWidth;
 const maxHeight = window.innerHeight;
 console.log(maxHeight);
 
 const titanicWaveBg = document.getElementById('titanic-wave-bg');
-titanicWaveBg.
+const titanicWaves = document.getElementById('titanic-waves');
+
+// titanicWaves.
 
 // const ship = document.querySelector('#titanic-ship')
 // const waveFg = document.querySelector('#titanic-wave-fg')

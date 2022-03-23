@@ -20,10 +20,10 @@ const titanicWaves = document.getElementById('titanic-waves');
 // titanicWaves.
 
 // const ship = document.querySelector('#titanic-ship')
-// const waveFg = document.querySelector('#titanic-wave-fg')
-// const waveBg = document.querySelector('#titanic-wave-bg')
+const waveFg = document.querySelector('#titanic-wave-fg')
+const waveBg = document.querySelector('#titanic-wave-bg')
 
-// const tl = new TimelineMax()
+const tl = new TimelineMax()
 
 // tl.to(ship, 3, {
 //   rotation: -10,
@@ -33,14 +33,14 @@ const titanicWaves = document.getElementById('titanic-waves');
 //   yoyo: true
 // }, 0)
 
-// tl.to(waveFg, 3, {
-//   x: -323.766,
-//   ease: Power0.easeNone,
-//   repeat: -1
-// }, 0)
+tl.to(waveFg, 3, {
+  x: -323.766,
+  ease: Power0.easeNone,
+  repeat: -1
+}, 0)
 
-// tl.from(waveBg, 3, {
-//   x: -323.766,
-//   ease: Power0.easeNone,
-//   repeat: -1
-// }, 0)
+tl.from(waveBg, 3, {
+  x: -323.766,
+  ease: Power0.easeNone,
+  repeat: -1
+}, 0)

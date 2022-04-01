@@ -1,5 +1,5 @@
 import * as d3 from 'd3';
-import './luckyNumbers.js';
+import './lib/luckyNumbers.js';
 import './lib/hasSurvived.js';
 import titanic from '../data/titanic.csv';
 

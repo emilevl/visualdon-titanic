@@ -17,9 +17,9 @@ console.log(maxHeight);
 
 
 
-titanic.forEach(elm => {
-  console.log(elm)
-});
+// titanic.forEach(elm => {
+//   console.log(elm)
+// });
 
 const titanicWaveBg = document.getElementById('titanic-wave-bg');
 const titanicWaves = document.getElementById('titanic-waves');

@@ -1,6 +1,5 @@
 import * as d3 from 'd3';
-
-// C'est ici que vous allez écrire les premières lignes en d3!
+import titanic from '../data/titanic.csv';
 
 const body = d3.select("body");
 const margin = ({
@@ -13,6 +12,12 @@ const margin = ({
 const maxWidth = window.innerWidth;
 const maxHeight = window.innerHeight;
 console.log(maxHeight);
+
+
+
+titanic.forEach(elm => {
+  console.log(elm)
+});
 
 const titanicWaveBg = document.getElementById('titanic-wave-bg');
 const titanicWaves = document.getElementById('titanic-waves');

@@ -1,5 +1,6 @@
 import * as d3 from 'd3';
 import './luckyNumbers.js';
+import './lib/hasSurvived';
 import titanic from '../data/titanic.csv';
 
 const body = d3.select("body");

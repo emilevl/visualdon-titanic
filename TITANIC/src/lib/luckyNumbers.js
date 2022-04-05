@@ -1,23 +1,26 @@
 import * as d3 from 'd3';
 import { scaleLinear } from 'd3';
-import titanic from '../data/titanic.csv';
+import titanic from '../../data/titanic.csv';
 
-const counts = {};
+// const counts = {};
 const ticketNumbers = new Array()
 const deadPassengers = titanic.filter(elm => !elm.survived)
+const nbOccurences = {}
 
 //console.log(deadPassengers);
+
 getTicketValues(deadPassengers);
 
-for (const num of ticketNumbers) {
-    counts[num] = counts[num] ? counts[num] + 1 : 1;
-  }
-
-
-//console.log("Nombre de W: " + counts['5']);
 ticketNumbers.sort();
-console.log(ticketNumbers)
 
+const uniqueElm = ticketNumbers.filter(onlyUnique);
+
+for (const num of ticketNumbers) {
+    nbOccurences[num] = nbOccurences[num] ? nbOccurences[num] + 1 : 1;
+}
+
+
+// ____________________ FUNCTIONS __________________________________
 
 function getTicketValues(data){
     data.forEach(elm => {
@@ -33,7 +36,7 @@ function getTicketValues(data){
         addDataToArray(newData, ticketNumbers);
     });
     //console.log(ticketNumbers);
-    return ticketNumbers;
+    // return ticketNumbers;
 }
 
 
@@ -53,4 +56,160 @@ function upperCaseAll(data) {
         data[index] = elm.toUpperCase();
     })
     return data;
+}
+
+function onlyUnique(value, index, self) {
+    return self.indexOf(value) == index;
+}
+
+// console.log(smallestValue(Object.values(nbOccurences)));
+console.log(nbOccurences);
+  
+
+
+
+
+
+// ___________________________ GRAPHIQUE ________________________________
+// console.log(smallestValue(life, 2021));
+const body = d3.select("body");
+
+// Définition des marges
+
+const margin = {top: 20, right: 10, bottom: 60, left: 60};
+const width = 1500 - margin.left - margin.right,
+height = 500 - margin.top - margin.bottom;
+
+// Création du graph de base
+d3.select("body")
+    .append("div")
+    .attr('id', 'graph')
+let svg = d3.select("#graph")
+    .append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+
+// Axe X, en fonction du revenu
+let x = d3.scaleLinear()
+    .domain([0, 1200])
+    .range([0, width]);
+
+// Axe Y, en fonction de l'âge
+let y = d3.scalePow()
+    .domain([0, 1200])
+    .range([ height, 0]);
+
+// La taille des bulles --> Log permet de limiter la différence trop élevée des bulles
+let z = d3.scaleSqrt()
+    .domain([smallestValue(Object.values(nbOccurences)), biggestValue(Object.values(nbOccurences))])
+    .range([5, 60]);
+
+
+svg.append("g")
+    .call(d3.axisLeft(y));
+
+svg.append("g")
+    .attr("transform", "translate(0," + height + ")")
+    .call(d3.axisBottom(x))
+    .selectAll("text")
+.attr("transform", "translate(-2,10)")
+
+// Add dots
+svg.append('g')
+    .selectAll("dot")
+    .data(Object.values(nbOccurences))
+    .enter()
+    .append("circle")
+    .attr("cx", (d) => x(d))
+    .attr("r", 10)
+    .style("fill", `#${Math.floor(Math.random() * 16777215).toString(16)}`)
+    .style("opacity", "0.7")
+    .attr("stroke", "black")
+
+// svg.selectAll("circle").data(Object.values(nbOccurences)).join()
+//     .attr("cy", (d) => y(d));
+
+// svg.selectAll("circle").data(Object.values(nbOccurences)).join()
+//     .attr("cy", (d) => y(d));
+
+svg.selectAll("circle").data(Object.values(nbOccurences)).join()
+    .attr("r", (d) => z(d));
+
+
+
+function biggestValue (data) {
+    let biggestValue = 0;
+    let number;
+    data.forEach(value => {
+        number = value;
+        if (number > biggestValue && typeof number !== 'undefined' && typeof number !== 'null')
+            biggestValue = number;
+    });
+    return biggestValue;
+}
+
+function smallestValue (data) {
+    let smallestValue = 0;
+    let number;
+    data.forEach((value, index) => {
+        number = value;
+        if ((number < smallestValue && typeof number !== 'undefined' && number !== null) || index == 0) {
+            smallestValue = number;
+        }
+    });
+    return smallestValue;
+}
+
+function strToNumber(str) {
+    let SI = typeof str === 'string' ||str instanceof String ? str.slice(-1) : str;
+    
+    // Extraire la partie numérique
+    let number = typeof str === 'string' || str instanceof String ? parseFloat(str.slice(0,-1)) : str;
+    
+   // Selon la valeur SI, multiplier par la puissance
+    switch (SI) {
+        case 'M': {
+            return number * Math.pow(10, 6);
+            break;
+        }
+        case 'B': {
+            return number * Math.pow(10, 9);
+            break;
+        }
+        case 'k': {
+            return number * Math.pow(10, 3);
+            break;
+        }
+        default: {
+            return number;
+            break;
+        }
+    }
+}
+
+// population.forEach(pays => {
+//     let popAnneeCourante = pays['2021'];
+//     if (typeof popAnneeCourante === 'string') {
+//         popAnneeCourante = strToNumber(pays['2021']);
+//     }
+//     pays['2021'] = popAnneeCourante;
+// });
+// console.log(population);
+// console.log(tabStrToInt(population));
+//tabStrToInt(population)
+//console.log(population)
+
+function tabStrToInt(tab) {
+    tab.forEach(elm => {
+        for (let i = 1800; i < 2050; i++) {
+            let number = strToNumber(elm[i]);
+            
+            if (typeof number === 'undefined' || number === null && (typeof elm[i+1] !== undefined && elm[i+1] !== null)) {
+                number = (elm[i-1] + elm[i+1]) / 2;
+            }
+            elm[i] = number;   
+        }
+    });
 }

@@ -1,4 +1,5 @@
 import * as d3 from 'd3';
+import * as cloud from 'd3-cloud';
 import { scaleLinear } from 'd3';
 import titanic from '../../data/titanic.csv';
 
@@ -15,10 +16,36 @@ ticketNumbers.sort();
 
 const uniqueElm = ticketNumbers.filter(onlyUnique);
 
+// Transforming to less numbers, but proportionally
+const allNumbersButLess = [];
+
+console.log(uniqueElm)
 for (const num of ticketNumbers) {
     nbOccurences[num] = nbOccurences[num] ? nbOccurences[num] + 1 : 1;
 }
 
+// array.forEach(element => {
+    
+// });
+
+// console.log(ticketNumbers);
+console.log(uniqueElm.map(function(d) {
+    return {text: d, size: nbOccurences[`${d}`]};
+  }));
+console.log(nbOccurences);
+
+var layout = cloud()
+    .size([500, 500])
+    .words(uniqueElm.map(function(d) {
+      return {text: d, size: nbOccurences[d] / 500 * 100};
+    }))
+    .padding(5)
+    .rotate(0)
+    .font("Impact")
+    .fontSize(function(d) { return d.size; })
+    .on("end", draw);
+
+layout.start();
 
 // ____________________ FUNCTIONS __________________________________
 
@@ -62,11 +89,29 @@ function onlyUnique(value, index, self) {
     return self.indexOf(value) == index;
 }
 
-// console.log(smallestValue(Object.values(nbOccurences)));
-console.log(nbOccurences);
+// // console.log(smallestValue(Object.values(nbOccurences)));
+// console.log(nbOccurences);
   
 
-
+// Function from the d3-cloud git
+function draw(words) {
+    d3.select("#step2").append("svg")
+        .attr("width", layout.size()[0])
+        .attr("height", layout.size()[1])
+      .append("g")
+        .attr("transform", "translate(" + layout.size()[0] / 2 + "," + layout.size()[1] / 2 + ")")
+      .selectAll("text")
+        .data(words)
+      .enter().append("text")
+        .style("font-size", function(d) { return d.size + "px"; })
+        .style("font-family", "Impact")
+        .attr("text-anchor", "middle")
+        .attr("transform", function(d) {
+          return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
+        })
+        .text(function(d) { return d.text; });
+  }
+  
 
 
 
@@ -81,52 +126,52 @@ const width = 1500 - margin.left - margin.right,
 height = 500 - margin.top - margin.bottom;
 
 // Création du graph de base
-d3.select("body")
-    .append("div")
-    .attr('id', 'graph')
-let svg = d3.select("#graph")
-    .append("svg")
-    .attr("width", width + margin.left + margin.right)
-    .attr("height", height + margin.top + margin.bottom)
-    .append("g")
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+// d3.select("#step2")
+//     .append("div")
+//     .attr('id', 'graph')
+// let svg = d3.select("#graph")
+//     .append("svg")
+//     .attr("width", width + margin.left + margin.right)
+//     .attr("height", height + margin.top + margin.bottom)
+//     .append("g")
+//     .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
 
 // Axe X, en fonction du revenu
-let x = d3.scaleLinear()
-    .domain([0, 1200])
-    .range([0, width]);
+// let x = d3.scaleLinear()
+//     .domain([0, 1200])
+//     .range([0, width]);
 
 // Axe Y, en fonction de l'âge
-let y = d3.scalePow()
-    .domain([0, 1200])
-    .range([ height, 0]);
+// let y = d3.scalePow()
+//     .domain([0, 1200])
+//     .range([ height, 0]);
 
 // La taille des bulles --> Log permet de limiter la différence trop élevée des bulles
-let z = d3.scaleSqrt()
-    .domain([smallestValue(Object.values(nbOccurences)), biggestValue(Object.values(nbOccurences))])
-    .range([5, 60]);
+// let z = d3.scaleSqrt()
+//     .domain([smallestValue(Object.values(nbOccurences)), biggestValue(Object.values(nbOccurences))])
+//     .range([5, 60]);
 
 
-svg.append("g")
-    .call(d3.axisLeft(y));
+// svg.append("g")
+//     .call(d3.axisLeft(y));
 
-svg.append("g")
-    .attr("transform", "translate(0," + height + ")")
-    .call(d3.axisBottom(x))
-    .selectAll("text")
-.attr("transform", "translate(-2,10)")
+// svg.append("g")
+//     .attr("transform", "translate(0," + height + ")")
+//     .call(d3.axisBottom(x))
+//     .selectAll("text")
+// .attr("transform", "translate(-2,10)")
 
 // Add dots
-svg.append('g')
-    .selectAll("dot")
-    .data(Object.values(nbOccurences))
-    .enter()
-    .append("circle")
-    .attr("cx", (d) => x(d))
-    .attr("r", 10)
-    .style("fill", `#${Math.floor(Math.random() * 16777215).toString(16)}`)
-    .style("opacity", "0.7")
-    .attr("stroke", "black")
+// svg.append('g')
+//     .selectAll("dot")
+//     .data(Object.values(nbOccurences))
+//     .enter()
+//     .append("circle")
+//     .attr("cx", (d) => x(d))
+//     .attr("r", 10)
+//     .style("fill", `#${Math.floor(Math.random() * 16777215).toString(16)}`)
+//     .style("opacity", "0.7")
+//     .attr("stroke", "black")
 
 // svg.selectAll("circle").data(Object.values(nbOccurences)).join()
 //     .attr("cy", (d) => y(d));
@@ -134,8 +179,8 @@ svg.append('g')
 // svg.selectAll("circle").data(Object.values(nbOccurences)).join()
 //     .attr("cy", (d) => y(d));
 
-svg.selectAll("circle").data(Object.values(nbOccurences)).join()
-    .attr("r", (d) => z(d));
+// svg.selectAll("circle").data(Object.values(nbOccurences)).join()
+//     .attr("r", (d) => z(d));
 
 
 
@@ -188,18 +233,6 @@ function strToNumber(str) {
         }
     }
 }
-
-// population.forEach(pays => {
-//     let popAnneeCourante = pays['2021'];
-//     if (typeof popAnneeCourante === 'string') {
-//         popAnneeCourante = strToNumber(pays['2021']);
-//     }
-//     pays['2021'] = popAnneeCourante;
-// });
-// console.log(population);
-// console.log(tabStrToInt(population));
-//tabStrToInt(population)
-//console.log(population)
 
 function tabStrToInt(tab) {
     tab.forEach(elm => {

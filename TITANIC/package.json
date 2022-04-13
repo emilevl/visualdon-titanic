@@ -10,8 +10,11 @@
   "author": "Noemi Romano",
   "license": "ISC",
   "dependencies": {
+    "css-loader": "^6.7.1",
     "d3": "^7.3.0",
-    "d3-cloud": "^1.2.5"
+    "d3-cloud": "^1.2.5",
+    "mini-css-extract-plugin": "^2.6.0",
+    "normalize.css": "^8.0.1"
   },
   "devDependencies": {
     "@babel/cli": "^7.17.6",
@@ -25,6 +28,6 @@
     "html-webpack-plugin": "^5.5.0",
     "webpack": "^5.70.0",
     "webpack-cli": "^4.9.2",
-    "webpack-dev-server": "^4.7.4"
+    "webpack-dev-server": "^4.8.1"
   }
 }

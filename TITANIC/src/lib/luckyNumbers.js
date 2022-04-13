@@ -16,13 +16,17 @@ ticketNumbers.sort();
 
 const uniqueElm = ticketNumbers.filter(onlyUnique);
 
-// Transforming to less numbers, but proportionally
-const allNumbersButLess = [];
-
 console.log(uniqueElm)
 for (const num of ticketNumbers) {
     nbOccurences[num] = nbOccurences[num] ? nbOccurences[num] + 1 : 1;
 }
+
+function getSixBiggestNumber(data) {
+    const sorted = Object.keys(data).sort((a, b) => data[b] - data[a]);
+    return sorted.slice(0, 6);
+}
+
+console.log(getSixBiggestNumber(nbOccurences));
 
 // array.forEach(element => {
     
@@ -48,6 +52,58 @@ var layout = cloud()
 layout.start();
 
 // ____________________ FUNCTIONS __________________________________
+
+// function get the ticket with the most occurences of sixBiggestNumber
+function getTicketWithMostOccurences(biggestNumbers) { 
+    let winner =  [];
+    let winnerNb = 0;
+    deadPassengers.forEach(passenger => {
+        if (passenger.ticket !== null && passenger.ticket !== undefined) {
+            const ticket = passenger.ticket.toString().split('');
+            console.log(ticket);
+            let n = 0;
+            ticket.forEach(letter => {
+                switch(letter) {
+                    case biggestNumbers[0]:
+                        n++;
+                    case biggestNumbers[1]:
+                        n++;
+                    case biggestNumbers[2]:
+                        n++;
+                    case biggestNumbers[3]:
+                        n++;
+                    case biggestNumbers[4]:
+                        n++;
+                    case biggestNumbers[5]:
+                        n++;
+                    case biggestNumbers[6]:
+                        n++;
+                        break;
+                }
+                })
+                if (n > winnerNb) {
+                    winner = passenger;
+                    winnerNb = n;
+                }
+            }
+
+            
+
+        
+            // check if the ticket contains most occurences of the six biggest numbers
+            // if (ticket.contains(biggestNumbers[0]) && ticket.contains(biggestNumbers[1]) && ticket.contains(biggestNumbers[2]) && ticket.contains(biggestNumbers[3]) && ticket.contains(biggestNumbers[4]) && ticket.contains(biggestNumbers[5])) {
+            //     winner = passenger.ticket;
+            // }
+    });
+    return winner;
+}
+
+// console.log("nbOccurence", deadPassengers);
+console.log("MMMM: ", getTicketWithMostOccurences(getSixBiggestNumber(nbOccurences)));
+
+
+
+
 
 function getTicketValues(data){
     data.forEach(elm => {

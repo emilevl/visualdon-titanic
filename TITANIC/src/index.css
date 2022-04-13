@@ -1,15 +1,14 @@
 
 body {
-    display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
-    margin: 0;
-    background-color: #0073ff;
+    margin: auto;
+    /* background-color: #0073ff; */
+    max-width: 80%;
   }
   
   svg {
     width: 90%;
     max-height: 90%;
   }
-  

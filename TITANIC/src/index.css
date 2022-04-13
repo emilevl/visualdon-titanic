@@ -1,5 +1,10 @@
 
+
 body {
+  margin: 0;
+
+}
+  #container {
     justify-content: center;
     align-items: center;
     height: 100vh;
@@ -7,8 +12,18 @@ body {
     /* background-color: #0073ff; */
     max-width: 80%;
   }
-  
+
+  #titanic-waves {
+    margin-top: -850px;
+  }
+/*   
   svg {
     width: 90%;
     max-height: 90%;
+  } */
+
+  #boat {
+    transform-box: fill-box;
+    transform-origin: center;
+    transform: rotate(2deg);
   }

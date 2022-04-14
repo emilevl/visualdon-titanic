@@ -41,7 +41,7 @@ console.log('6 biggest numbers:', getSixBiggestNumber(nbOccurences));
 var layout = cloud()
     .size([500, 500])
     .words(uniqueElm.map(function(d) {
-      return {text: d, size: nbOccurences[d] / 500 * 100, color: '#fff'};
+      return {text: d, size: nbOccurences[d] / 500 * 100};
     }))
     .padding(5)
     .rotate(0)
@@ -102,9 +102,6 @@ function getTicketWithMostOccurences(biggestNumbers) {
 console.log("Winner: ", getTicketWithMostOccurences(getSixBiggestNumber(nbOccurences)));
 
 
-
-
-
 function getTicketValues(data){
     data.forEach(elm => {
         const ticket = elm.ticket
@@ -154,6 +151,7 @@ function draw(words) {
     d3.select("#step2").append("svg")
         .attr("width", layout.size()[0])
         .attr("height", layout.size()[1])
+        .style("fill", "white")
       .append("g")
         .attr("transform", "translate(" + layout.size()[0] / 2 + "," + layout.size()[1] / 2 + ")")
       .selectAll("text")

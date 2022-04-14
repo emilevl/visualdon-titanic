@@ -16,7 +16,7 @@ ticketNumbers.sort();
 
 const uniqueElm = ticketNumbers.filter(onlyUnique);
 
-console.log(uniqueElm)
+// console.log(uniqueElm)
 for (const num of ticketNumbers) {
     nbOccurences[num] = nbOccurences[num] ? nbOccurences[num] + 1 : 1;
 }
@@ -26,22 +26,22 @@ function getSixBiggestNumber(data) {
     return sorted.slice(0, 6);
 }
 
-console.log(getSixBiggestNumber(nbOccurences));
+console.log('6 biggest numbers:', getSixBiggestNumber(nbOccurences));
 
 // array.forEach(element => {
     
 // });
 
 // console.log(ticketNumbers);
-console.log(uniqueElm.map(function(d) {
-    return {text: d, size: nbOccurences[`${d}`]};
-  }));
-console.log(nbOccurences);
+// console.log(uniqueElm.map(function(d) {
+//     return {text: d, size: nbOccurences[`${d}`]};
+//   }));
+// console.log(nbOccurences);
 
 var layout = cloud()
     .size([500, 500])
     .words(uniqueElm.map(function(d) {
-      return {text: d, size: nbOccurences[d] / 500 * 100};
+      return {text: d, size: nbOccurences[d] / 500 * 100, color: '#fff'};
     }))
     .padding(5)
     .rotate(0)
@@ -60,7 +60,7 @@ function getTicketWithMostOccurences(biggestNumbers) {
     deadPassengers.forEach(passenger => {
         if (passenger.ticket !== null && passenger.ticket !== undefined) {
             const ticket = passenger.ticket.toString().split('');
-            console.log(ticket);
+            // console.log(ticket);
             let n = 0;
             ticket.forEach(letter => {
                 switch(letter) {
@@ -99,7 +99,7 @@ function getTicketWithMostOccurences(biggestNumbers) {
 }
 
 // console.log("nbOccurence", deadPassengers);
-console.log("MMMM: ", getTicketWithMostOccurences(getSixBiggestNumber(nbOccurences)));
+console.log("Winner: ", getTicketWithMostOccurences(getSixBiggestNumber(nbOccurences)));
 
 
 

@@ -33,9 +33,9 @@ titanic.forEach(passenger => {
     }
 });
 
-console.log('Au total il y a ' + compteurPassengers + ' passagers…');
-console.log(compteurPassengersSurvived + ' passagers ont survécu.');
-console.log(compteurPassengersDead + ' passagers sont morts.');
+// console.log('Au total il y a ' + compteurPassengers + ' passagers…');
+// console.log(compteurPassengersSurvived + ' passagers ont survécu.');
+// console.log(compteurPassengersDead + ' passagers sont morts.');
 
 d3.select('#sections').append('section')
     .attr('class', 'step')
@@ -134,17 +134,17 @@ titanic.forEach(passenger => {
             thirdClassDead++;
         }
     } else {
-        console.log('Classe indéfinie');
+        // console.log('Classe indéfinie');
         undefinedClass++;
     }
 });
-console.log(firstClassTotal + ' firstClass');
-console.log('firstClass : ' + firstClassAlive + ' ont survécu et ' + firstClassDead + ' sont décédés');
-console.log(secondClassTotal + ' secondClass');
-console.log('secondClass : ' + secondClassAlive + ' ont survécu et ' + secondClassDead + ' sont décédés');
-console.log(thirdClassTotal + ' thirdClass');
-console.log('thirdClass : ' + thirdClassAlive + ' ont survécu et ' + thirdClassDead + ' sont décédés');
-console.log(undefinedClass + ' undefinedClass');
+// console.log(firstClassTotal + ' firstClass');
+// console.log('firstClass : ' + firstClassAlive + ' ont survécu et ' + firstClassDead + ' sont décédés');
+// console.log(secondClassTotal + ' secondClass');
+// console.log('secondClass : ' + secondClassAlive + ' ont survécu et ' + secondClassDead + ' sont décédés');
+// console.log(thirdClassTotal + ' thirdClass');
+// console.log('thirdClass : ' + thirdClassAlive + ' ont survécu et ' + thirdClassDead + ' sont décédés');
+// console.log(undefinedClass + ' undefinedClass');
 
 let svg3 = d3.select('#step1')
     .append('svg')

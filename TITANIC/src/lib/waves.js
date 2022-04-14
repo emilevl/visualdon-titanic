@@ -10,20 +10,19 @@ const waveBg = document.querySelector('#titanic-wave-bg')
 
 const boat = document.querySelector('#boat');
 
-gsap.to(boat, 3, {
-    rotation: -2,
+gsap.to(boat, 3.5, {
+    rotation: -2.7,
     transformOrigin: 'center',
-    ease: "power3.inOut",
+    ease: "power2.inOut",
     repeat: -1,
     yoyo: true
-  }, 0)
+  }, 0) 
 
-  gsap.to(boat, 3, {
-    rotation: -2,
-    scale: 1.05,
-    ease: "power1.inOut",
+  gsap.to(boat, 20, {
+    translateX: -600,
+    ease: "none",
     repeat: -1,
-    yoyo: true
+    yoyo: false
   }, 0)
 
 // const tl = new TimelineMax()

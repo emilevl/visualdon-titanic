@@ -4,6 +4,7 @@ import './lib/hasSurvived.js';
 import './lib/waves.js';
 import titanic from '../data/titanic.csv';
 import '../src/index.css';
+import { animate } from './lib/hasSurvived.js';
 // const body = d3.select("body");
 // const margin = ({
 //     top: 30,
@@ -92,6 +93,7 @@ function toggleScroll() {
 }
 
 document.addEventListener("wheel", function (e) {
+  animate();
   let TopScroll = window.pageYOffset || document.documentElement.scrollTop;
   let LeftScroll = window.pageXOffset || document.documentElement.scrollLeft;
   // to make it work on IE or Chrome

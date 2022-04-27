@@ -1,5 +1,9 @@
 import * as d3 from 'd3';
 import titanic from '../../data/titanic.csv';
+import {getTotalScroll, setTotalScroll} from '../index.js';
+
+setTotalScroll(20000);
+console.log("SCROOOOLLLL: " + getTotalScroll());
 
 // console.log('The test has survived');
 

@@ -108,3 +108,10 @@ document.addEventListener("wheel", function (e) {
 
 }, true);
 
+export function getTotalScroll() {
+  return totalScroll;
+}
+
+export function setTotalScroll(value) {
+  totalScroll = value;
+}

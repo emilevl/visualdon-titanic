@@ -1,5 +1,6 @@
 import * as d3 from 'd3';
 import titanic from '../../data/titanic.csv';
+
 import { getTotalScroll, setTotalScroll } from '../index.js';
 
 setTotalScroll(20000);
@@ -65,6 +66,7 @@ for (let i = 0; i <= compteurPassengers; i++) {
 
     svg1.append('circle')
         .attr('class', 'circles-passengers')
+        .attr('id', 'circle' + i)
         .attr('cx', cx)
         .attr('cy', cy)
         .attr('r', 5)
@@ -249,13 +251,92 @@ function play() {
 
 // // Fonction de mise à jour du graphique
 function updateChart() {
-    svg1.selectAll('circle')
-        .attr('fill', 'red'),
-        update => update.transition(d3.transition()
-            .duration(500)
+    // PREMIER ESSAI
+    // svg1.selectAll('circle')
+    //     .transition(d3.transition()
+    //     .duration(500)
+    //     .ease(d3.easeLinear)).attr('fill', 'red')
+    // ()
+
+    let cx2 = 0
+    let cy2 = 0
+    
+    const titanicSurvivedSort = titanic.sort((a, b) => {
+        // sort with survived first
+        if (a.survived === b.survived) {
+            return 0
+        } else if (a.survived) {
+            return -1
+        } else {
+            return 1
+        }
+    })
+    titanic.forEach((passenger, i) => { 
+        passenger.cx = (i % 50) * 20 + 10
+        passenger.cy = Math.floor(i / 50) * 20 + 10
+        // cx2 = (j % 50) * 20 + 10
+        // console.log(cx2);
+
+        // cy2 = Math.floor(j / 50) * 20 + 10
+        // console.log(cy2);
+    })
+    let cx = 0
+    let cy = 0
+
+    let allCircles = svg1.selectAll('circle')
+        .data(titanicSurvivedSort)
+    let nbDead = 0;
+    let nbAlive = 0;
+    allCircles.enter()
+        .merge(allCircles)
+        .transition(d3.transition()
+            .duration(1000)
             .ease(d3.easeLinear))
-            .attr('fill', 'green'),
-        exit => exit.remove()
+            .attr('fill', function(d) {
+                // console.log(d.survived);
+                if (d.survived === 1) {
+                    nbAlive++;
+                    return "green"
+                } else {
+                    nbDead++;
+                    return 'red'
+                }
+            })
+            .attr('cx', function(d, i) {
+                // sort with survived first
+                return titanicSurvivedSort[i].cx
+                // Sort with survived = 1 first
+
+            //     if (d.survived === 1) {
+            //         cx = (i % 50) * 20 + 10
+            //     } else {
+            //         cx = (50 - i % 50) * 20 + 10
+            //     }
+            //     return cx
+            // })
+
+                // cx = (i % 50) * 20 + 10
+                // console.log('cx ' + cx);
+                return d.cx
+            })
+            .attr('cy', function(d, i) {
+                return titanicSurvivedSort[i].cy
+                // Sort with survived = 1 first
+            //     if (d.survived === 1) {
+            //         cy = Math.floor(i / 50) * 20 + 10
+            //     } else {
+            //         cy = (50 - Math.floor(i / 50)) * 20 + 10
+            //     }
+            //     return cy
+            // })
+                // cy = Math.floor(i / 50) * 20 + 10
+                // console.log('cy ' + cy);
+                return d.cy
+                
+            })
+            // console.log('nbAlive : ' + nbAlive);
+            // console.log('nbDead : ' + nbDead);
+
 }
 
 animate()

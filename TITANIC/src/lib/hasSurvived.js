@@ -4,9 +4,6 @@ import titanic from '../../data/titanic.csv';
 import { getTotalScroll, setTotalScroll } from '../index.js';
 
 setTotalScroll(20000);
-console.log("SCROOOOLLLL: " + getTotalScroll());
-
-// console.log('The test has survived');
 
 d3.select("body")
     .append("div")
@@ -56,16 +53,20 @@ let svg1 = d3.select('#step1')
     .attr("width", width)
     .attr("height", height);
 
+// set the cx and cy for each passenger
+titanic.forEach((passenger, i) => { 
+    passenger.cx = (i % 50) * 20 + (((width - (49 * 20)))/2);
+    passenger.cy = Math.floor(i / 50) * 20 + (((height - (26 * 20)))/2)
+})
 // Create all passengers
 let cx = 0
 let cy = 0
 for (let i = 0; i < compteurPassengers; i++) {
     //center the circles to the width and height
-    console.log(width)
     cx = (i % 50) * 20 + (((width - (49 * 20)))/2);
     // console.log(cx);
 
-    cy = Math.floor(i / 50) * 20 + height/10;
+    cy = Math.floor(i / 50) * 20 + (((height - (26 * 20)))/2);
     // console.log(cy);
 
     svg1.append('circle')
@@ -235,19 +236,19 @@ console.log('totalScroll DANS hasSurvived : ' + getTotalScroll());
 export function animate() {
     // regarder si l'intervalle a été déjà démarré
     if (getTotalScroll() < 100) {
-        console.log('transparent');
+        // console.log('transparent');
         d3.select('#titre').text('STEP 0 : INTRODUCTION')
         step0();
     }else if (getTotalScroll() > 100 && getTotalScroll() < 1000) {
-        console.log('STEP 1');
+        // console.log('STEP 1');
         d3.select('#titre').text('STEP 1 : EVERYONE')
         step1();
     }else if (getTotalScroll() >= 1000 && getTotalScroll() < 1500) {
-        console.log('STEP 2');
+        // console.log('STEP 2');
         d3.select('#titre').text('STEP 2 : DEADS')
         step2();
     }else if (getTotalScroll() >= 1500 && getTotalScroll() < 2000) {
-        console.log('STEP 3');
+        // console.log('STEP 3');
         d3.select('#titre').text('STEP 3 : DEADS BY CLASS')
         step3();
     }
@@ -271,12 +272,6 @@ export function animate() {
 // Step 0
 function step0() {
 
-    titanic.forEach((passenger, i) => { 
-        passenger.cx = (i % 50) * 20 + 10
-        passenger.cy = Math.floor(i / 50) * 20 + 10
-        let cx = 0
-        let cy = 0
-    })
 
     let allCircles = svg1.selectAll('circle')
         .data(titanic)
@@ -294,20 +289,15 @@ function step0() {
 //Step 1
 function step1() {
 
-    let cx2 = 0
-    let cy2 = 0
-
-    titanic.forEach((passenger, i) => { 
-        passenger.cx = (i % 50) * 20 + 10
-        passenger.cy = Math.floor(i / 50) * 20 + 10
-        let cx = 0
-        let cy = 0
-    })
+    // titanic.forEach((passenger, i) => { 
+    //     passenger.cx = (i % 50) * 20 + 10
+    //     passenger.cy = Math.floor(i / 50) * 20 + 10
+    //     let cx = 0
+    //     let cy = 0
+    // })
 
     let allCircles = svg1.selectAll('circle')
         .data(titanic)
-    let nbDead = 0;
-    let nbAlive = 0;
     allCircles.enter()
         .merge(allCircles)
         .transition(d3.transition()
@@ -335,17 +325,6 @@ function step2() {
     //         return 1
     //     }
     // })
-    titanic.forEach((passenger, i) => { 
-        passenger.cx = (i % 50) * 20 + 10
-        passenger.cy = Math.floor(i / 50) * 20 + 10
-        // cx2 = (j % 50) * 20 + 10
-        // console.log(cx2);
-
-        // cy2 = Math.floor(j / 50) * 20 + 10
-        // console.log(cy2);
-    })
-    let cx = 0
-    let cy = 0
 
     let allCircles = svg1.selectAll('circle')
         .data(titanic)
@@ -414,13 +393,6 @@ function step2() {
 //Step 3
 function step3() {
 
-    titanic.forEach((passenger, i) => { 
-        passenger.cx = (i % 50) * 20 + 10
-        passenger.cy = Math.floor(i / 50) * 20 + 10
-        let cx = 0
-        let cy = 0
-    })
-
     let allCircles = svg1.selectAll('circle')
         .data(titanic)
     let nbDead = 0;
@@ -438,7 +410,7 @@ function step3() {
             })
             .attr('cx', function(d, i) {
                 // sort with survived first
-                console.log(d.pclass);
+                // console.log(d.pclass);
                 return titanic[i].cx
                 // Sort with survived = 1 first
 

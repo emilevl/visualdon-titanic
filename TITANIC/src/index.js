@@ -86,8 +86,9 @@ function toggleScroll() {
     document.querySelector('body').classList.remove('stop-scroll');
     boxElement.classList.remove('full-screen');
     if (totalScroll > -150 && !alreadyPositioned) {
-      window.scrollTo(0, maxHeight * 0.89)
+      window.scrollTo(0, maxHeight * 0.88)
       alreadyPositioned = true;
+      console.log("FIN ANIMATION")
     }
   }
 }

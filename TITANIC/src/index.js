@@ -18,7 +18,7 @@ import { animate } from './lib/hasSurvived.js';
 let scroll = true;
 const maxHeight = window.innerHeight;
 
-console.log(maxHeight)
+// console.log(maxHeight)
 let numSteps = 10.0;
 let totalScroll = 100000;
 let alreadyPositioned = false;

@@ -13,8 +13,8 @@ d3.select("body")
     .attr('id', 'graph')
 
 let margin = { top: 10, right: 20, bottom: 30, left: 50 },
-    width = 1500 - margin.left - margin.right,
-    height = 500 - margin.top - margin.bottom;
+    width = window.innerWidth,
+    height = window.innerHeight;
 
 // let svg = d3.select("#graph")
 //     .append("svg")
@@ -23,7 +23,7 @@ let margin = { top: 10, right: 20, bottom: 30, left: 50 },
 //     .append("g")
 //     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
-d3.select('.step').append('h1').attr('id', 'titre').text("L'entier des passagers")
+d3.select('.step').append('div').attr('id', 'description').append('h1').attr('id', 'titre').text("L'entier des passagers")
 
 let compteurPassengers = 0
 let compteurPassengersSurvived = 0
@@ -52,16 +52,20 @@ d3.select('#sections').append('section')
 let svg1 = d3.select('#step1')
     .append('svg')
     .attr('id', 'svg-allPassengers')
-    .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+    // .attr("transform", "translate(" + margin.left + ", 0)")
+    .attr("width", width)
+    .attr("height", height);
 
-// Pour l'entier des passagers :
+// Create all passengers
 let cx = 0
 let cy = 0
-for (let i = 0; i <= compteurPassengers; i++) {
-    cx = (i % 50) * 20 + 10
+for (let i = 0; i < compteurPassengers; i++) {
+    //center the circles to the width and height
+    console.log(width)
+    cx = (i % 50) * 20 + (((width - (49 * 20)))/2);
     // console.log(cx);
 
-    cy = Math.floor(i / 50) * 20 + 10
+    cy = Math.floor(i / 50) * 20 + height/10;
     // console.log(cy);
 
     svg1.append('circle')
@@ -70,9 +74,10 @@ for (let i = 0; i <= compteurPassengers; i++) {
         .attr('cx', cx)
         .attr('cy', cy)
         .attr('r', 5)
-        .attr('fill', 'white')
+        .attr('fill', 'transparent')
+        .attr('opacity', '0.0')
 }
-d3.select('#svg-allPassengers').attr("width", cx * 5).attr("height", cy + 10)
+d3.select('#svg-allPassengers').attr("width", cx * 6).attr("height", cy + 10)
 
 // // Pour survivants vs morts :
 // let svg2 = d3.select('#step1')
@@ -108,44 +113,44 @@ d3.select('#svg-allPassengers').attr("width", cx * 5).attr("height", cy + 10)
 // }
 // d3.select('#svg-PassDeadAndSurv').attr("width", cx2 * 5).attr("height", cy2 + 10)
 
-// // Pour survivants vs morts par classe:
-// let firstClassTotal = 0;
-// let firstClassAlive = 0;
-// let firstClassDead = 0;
-// let secondClassTotal = 0;
-// let secondClassAlive = 0;
-// let secondClassDead = 0;
-// let thirdClassTotal = 0;
-// let thirdClassAlive = 0;
-// let thirdClassDead = 0;
-// let undefinedClass = 0;
-// titanic.forEach(passenger => {
-//     if (passenger.pclass === 1) {
-//         firstClassTotal++;
-//         if (passenger.survived) {
-//             firstClassAlive++;
-//         } else {
-//             firstClassDead++;
-//         }
-//     } else if (passenger.pclass === 2) {
-//         secondClassTotal++;
-//         if (passenger.survived) {
-//             secondClassAlive++;
-//         } else {
-//             secondClassDead++;
-//         }
-//     } else if (passenger.pclass === 3) {
-//         thirdClassTotal++;
-//         if (passenger.survived) {
-//             thirdClassAlive++;
-//         } else {
-//             thirdClassDead++;
-//         }
-//     } else {
-//         // console.log('Classe indéfinie');
-//         undefinedClass++;
-//     }
-// });
+// Get numbers of everything Pour survivants vs morts par classe:
+let firstClassTotal = 0;
+let firstClassAlive = 0;
+let firstClassDead = 0;
+let secondClassTotal = 0;
+let secondClassAlive = 0;
+let secondClassDead = 0;
+let thirdClassTotal = 0;
+let thirdClassAlive = 0;
+let thirdClassDead = 0;
+let undefinedClass = 0;
+titanic.forEach(passenger => {
+    if (passenger.pclass === 1) {
+        firstClassTotal++;
+        if (passenger.survived) {
+            firstClassAlive++;
+        } else {
+            firstClassDead++;
+        }
+    } else if (passenger.pclass === 2) {
+        secondClassTotal++;
+        if (passenger.survived) {
+            secondClassAlive++;
+        } else {
+            secondClassDead++;
+        }
+    } else if (passenger.pclass === 3) {
+        thirdClassTotal++;
+        if (passenger.survived) {
+            thirdClassAlive++;
+        } else {
+            thirdClassDead++;
+        }
+    } else {
+        // console.log('Classe indéfinie');
+        undefinedClass++;
+    }
+});
 // // console.log(firstClassTotal + ' firstClass');
 // // console.log('firstClass : ' + firstClassAlive + ' ont survécu et ' + firstClassDead + ' sont décédés');
 // // console.log(secondClassTotal + ' secondClass');
@@ -229,18 +234,32 @@ console.log('totalScroll DANS hasSurvived : ' + getTotalScroll());
 
 export function animate() {
     // regarder si l'intervalle a été déjà démarré
-    if (getTotalScroll() > 1000 && getTotalScroll() < 1500) {
-        console.log('ON VEUT UNE ANIMATION');
-        play()
+    if (getTotalScroll() < 100) {
+        console.log('transparent');
+        d3.select('#titre').text('STEP 0 : INTRODUCTION')
+        step0();
+    }else if (getTotalScroll() > 100 && getTotalScroll() < 1000) {
+        console.log('STEP 1');
+        d3.select('#titre').text('STEP 1 : EVERYONE')
+        step1();
+    }else if (getTotalScroll() >= 1000 && getTotalScroll() < 1500) {
+        console.log('STEP 2');
+        d3.select('#titre').text('STEP 2 : DEADS')
+        step2();
+    }else if (getTotalScroll() >= 1500 && getTotalScroll() < 2000) {
+        console.log('STEP 3');
+        d3.select('#titre').text('STEP 3 : DEADS BY CLASS')
+        step3();
     }
-}
-
-
-
-// let i = -1;
-function play() {
-    d3.select('#titre').text('mort vs vivant')
-    updateChart();
+    // else if (getTotalScroll() >= 2000 && getTotalScroll() < 2500) {
+    //     console.log('STEP 4');
+    //     d3.select('#titre').text('STEP 4 : SURVIVORS BY CLASS')
+    //     step4();
+    // }else if (getTotalScroll() >= 2500 && getTotalScroll() < 3000) {
+    //     console.log('STEP 5');
+    //     d3.select('#titre').text('STEP 5 : SURVIVORS BY CLASS')
+    //     step5();
+    // }
 }
 
 // // Mettre en pause
@@ -249,28 +268,73 @@ function play() {
 //     nIntervId = null;
 // }
 
+// Step 0
+function step0() {
+
+    titanic.forEach((passenger, i) => { 
+        passenger.cx = (i % 50) * 20 + 10
+        passenger.cy = Math.floor(i / 50) * 20 + 10
+        let cx = 0
+        let cy = 0
+    })
+
+    let allCircles = svg1.selectAll('circle')
+        .data(titanic)
+    let nbDead = 0;
+    let nbAlive = 0;
+    allCircles.enter()
+        .merge(allCircles)
+        .transition(d3.transition()
+            .duration(500)
+            .ease(d3.easeLinear))
+            .attr('fill', 'transparent')
+            .attr('opacity', 1.0)
+}
+
+//Step 1
+function step1() {
+
+    let cx2 = 0
+    let cy2 = 0
+
+    titanic.forEach((passenger, i) => { 
+        passenger.cx = (i % 50) * 20 + 10
+        passenger.cy = Math.floor(i / 50) * 20 + 10
+        let cx = 0
+        let cy = 0
+    })
+
+    let allCircles = svg1.selectAll('circle')
+        .data(titanic)
+    let nbDead = 0;
+    let nbAlive = 0;
+    allCircles.enter()
+        .merge(allCircles)
+        .transition(d3.transition()
+            .duration(500)
+            .ease(d3.easeLinear))
+            .attr('fill', 'white')
+            .attr('opacity', 1.0)
+}
+
 // // Fonction de mise à jour du graphique
-function updateChart() {
+function step2() {
     // PREMIER ESSAI
     // svg1.selectAll('circle')
     //     .transition(d3.transition()
     //     .duration(500)
     //     .ease(d3.easeLinear)).attr('fill', 'red')
     // ()
-
-    let cx2 = 0
-    let cy2 = 0
-    
-    const titanicSurvivedSort = titanic.sort((a, b) => {
-        // sort with survived first
-        if (a.survived === b.survived) {
-            return 0
-        } else if (a.survived) {
-            return -1
-        } else {
-            return 1
-        }
-    })
+    // const titanicSurvivedSort = titanic.sort((a, b) => {
+    //     // sort with survived first
+    //     if (a.survived === b.survived) {
+    //         return 0
+    //     } else if (a.survived) {
+    //         return -1
+    //     } else {
+    //         return 1
+    //     }
+    // })
     titanic.forEach((passenger, i) => { 
         passenger.cx = (i % 50) * 20 + 10
         passenger.cy = Math.floor(i / 50) * 20 + 10
@@ -284,7 +348,7 @@ function updateChart() {
     let cy = 0
 
     let allCircles = svg1.selectAll('circle')
-        .data(titanicSurvivedSort)
+        .data(titanic)
     let nbDead = 0;
     let nbAlive = 0;
     allCircles.enter()
@@ -292,20 +356,27 @@ function updateChart() {
         .transition(d3.transition()
             .duration(1000)
             .ease(d3.easeLinear))
-            .attr('fill', function(d) {
-                // console.log(d.survived);
+            // .attr('fill', function(d) {
+            //     // console.log(d.survived);
+            //     if (d.survived === 1) {
+            //         nbAlive++;
+            //         return "transparent"
+            //     } else {
+            //         nbDead++;
+            //         return 'white'
+            //     }
+            // })
+            .attr('opacity', 1.0)
+            .attr('cy', function(d, i) {
+                // sort with survived first
+                // return titanicSurvivedSort[i].cx
                 if (d.survived === 1) {
-                    nbAlive++;
-                    return "green"
-                } else {
-                    nbDead++;
-                    return 'red'
+                    return -500;
+                }else {
+                    // keep same cx
+                    return d.cy;
                 }
             })
-            .attr('cx', function(d, i) {
-                // sort with survived first
-                return titanicSurvivedSort[i].cx
-                // Sort with survived = 1 first
 
             //     if (d.survived === 1) {
             //         cx = (i % 50) * 20 + 10
@@ -315,12 +386,12 @@ function updateChart() {
             //     return cx
             // })
 
-                // cx = (i % 50) * 20 + 10
-                // console.log('cx ' + cx);
-                return d.cx
-            })
-            .attr('cy', function(d, i) {
-                return titanicSurvivedSort[i].cy
+            //     cx = (i % 50) * 20 + 10
+            //     console.log('cx ' + cx);
+            //     return d.cx
+            // })
+            // .attr('cy', function(d, i) {
+                // return titanicSurvivedSort[i].cy
                 // Sort with survived = 1 first
             //     if (d.survived === 1) {
             //         cy = Math.floor(i / 50) * 20 + 10
@@ -329,14 +400,74 @@ function updateChart() {
             //     }
             //     return cy
             // })
-                // cy = Math.floor(i / 50) * 20 + 10
-                // console.log('cy ' + cy);
-                return d.cy
+            //     cy = Math.floor(i / 50) * 20 + 10
+            //     console.log('cy ' + cy);
+            //     return d.cy
                 
-            })
+            // })
             // console.log('nbAlive : ' + nbAlive);
             // console.log('nbDead : ' + nbDead);
 
 }
 
+
+//Step 3
+function step3() {
+
+    titanic.forEach((passenger, i) => { 
+        passenger.cx = (i % 50) * 20 + 10
+        passenger.cy = Math.floor(i / 50) * 20 + 10
+        let cx = 0
+        let cy = 0
+    })
+
+    let allCircles = svg1.selectAll('circle')
+        .data(titanic)
+    let nbDead = 0;
+    let nbAlive = 0;
+    allCircles.enter()
+        .merge(allCircles)
+        .transition(d3.transition()
+            .duration(500)
+            .ease(d3.easeLinear))
+            .attr('opacity', function(d) {
+                // console.log(d.survived);
+                if (d.survived === 0) {
+                    return d.pclass /3;
+                } 
+            })
+            .attr('cx', function(d, i) {
+                // sort with survived first
+                console.log(d.pclass);
+                return titanic[i].cx
+                // Sort with survived = 1 first
+
+                if (d.pclass == 1) {
+                    cx = (i % 50) * 20 + 10
+                } else {
+                    cx = (50 - i % 50) * 20 + 10
+                }
+                return cx
+            })
+
+            //     cx = (i % 50) * 20 + 10
+            //     console.log('cx ' + cx);
+            //     return d.cx
+            // })
+            .attr('cy', function(d, i) {
+                return titanic[i].cy
+                // Sort with survived = 1 first
+                if (d.survived === 1) {
+                    cy = Math.floor(i / 50) * 20 + 10
+                } else {
+                    cy = (50 - Math.floor(i / 50)) * 20 + 10
+                }
+                return cy
+            })
+            //     cy = Math.floor(i / 50) * 20 + 10
+            //     console.log('cy ' + cy);
+            //     return d.cy
+                
+            // })
+}
 animate()

@@ -54,19 +54,19 @@ let svg1 = d3.select('#step1')
     .attr("height", height);
 
 // set the cx and cy for each passenger
-titanic.forEach((passenger, i) => { 
-    passenger.cx = (i % 50) * 20 + (((width - (49 * 20)))/2);
-    passenger.cy = Math.floor(i / 50) * 20 + (((height - (26 * 20)))/2)
+titanic.forEach((passenger, i) => {
+    passenger.cx = (i % 50) * 20 + (((width - (49 * 20))) / 2);
+    passenger.cy = Math.floor(i / 50) * 20 + (((height - (26 * 20))) / 2)
 })
 // Create all passengers
 let cx = 0
 let cy = 0
 for (let i = 0; i < compteurPassengers; i++) {
     //center the circles to the width and height
-    cx = (i % 50) * 20 + (((width - (49 * 20)))/2);
+    cx = (i % 50) * 20 + (((width - (49 * 20))) / 2);
     // console.log(cx);
 
-    cy = Math.floor(i / 50) * 20 + (((height - (26 * 20)))/2);
+    cy = Math.floor(i / 50) * 20 + (((height - (26 * 20))) / 2);
     // console.log(cy);
 
     svg1.append('circle')
@@ -226,7 +226,7 @@ titanic.forEach(passenger => {
 // }
 // d3.select('#svg-PassDeadAndSurvByClass').attr("width", cx3 * 5).attr("height", cy3 + 10)
 
-console.log('totalScroll DANS hasSurvived : ' + getTotalScroll());
+// console.log('totalScroll DANS hasSurvived : ' + getTotalScroll());
 
 // // Variable où on stocke l'id de notre intervalle
 // let nIntervId;
@@ -235,32 +235,40 @@ console.log('totalScroll DANS hasSurvived : ' + getTotalScroll());
 
 export function animate() {
     // regarder si l'intervalle a été déjà démarré
-    if (getTotalScroll() < 100) {
-        // console.log('transparent');
+    if (getTotalScroll() < 500) {
+        console.log('transparent');
         d3.select('#titre').text('STEP 0 : INTRODUCTION')
         step0();
-    }else if (getTotalScroll() > 100 && getTotalScroll() < 1000) {
-        // console.log('STEP 1');
+    } else if (getTotalScroll() >= 500 && getTotalScroll() < 2000) {
+        console.log('STEP 1');
         d3.select('#titre').text('STEP 1 : EVERYONE')
         step1();
-    }else if (getTotalScroll() >= 1000 && getTotalScroll() < 1500) {
-        // console.log('STEP 2');
+    } else if (getTotalScroll() >= 2000 && getTotalScroll() < 3500) {
+        console.log('STEP 2');
         d3.select('#titre').text('STEP 2 : DEADS')
         step2();
-    }else if (getTotalScroll() >= 1500 && getTotalScroll() < 2000) {
-        // console.log('STEP 3');
-        d3.select('#titre').text('STEP 3 : DEADS BY CLASS')
-        step3();
+    } else if (getTotalScroll() >= 3500 && getTotalScroll() < 4250) {
+        console.log('STEP 3a');
+        d3.select('#titre').text('STEP 3 : DEADS BY CLASS – Distinction opacité')
+        step3a();
+    } else if (getTotalScroll() >= 4250 && getTotalScroll() < 5000) {
+        console.log('STEP 3b');
+        d3.select('#titre').text('STEP 3 : DEADS BY CLASS — Firstclass out')
+        step3b();
+    } else if (getTotalScroll() >= 5000 && getTotalScroll() < 5750) {
+        console.log('STEP 3b');
+        d3.select('#titre').text('STEP 3 : DEADS BY CLASS — Secondclass out')
+        step3c();
     }
-    // else if (getTotalScroll() >= 2000 && getTotalScroll() < 2500) {
-    //     console.log('STEP 4');
-    //     d3.select('#titre').text('STEP 4 : SURVIVORS BY CLASS')
-    //     step4();
-    // }else if (getTotalScroll() >= 2500 && getTotalScroll() < 3000) {
-    //     console.log('STEP 5');
-    //     d3.select('#titre').text('STEP 5 : SURVIVORS BY CLASS')
-    //     step5();
-    // }
+    else if (getTotalScroll() >= 5750 && getTotalScroll() < 7250) {
+        console.log('STEP 4');
+        d3.select('#titre').text('STEP 4 : Notre problématique')
+        step4();
+    } else if (getTotalScroll() >= 7250 && getTotalScroll() < 9750) {
+        console.log('STEP 5');
+        d3.select('#titre').text('STEP 5 : Mosaïque de chiffre')
+        step5();
+    }
 }
 
 // // Mettre en pause
@@ -269,21 +277,21 @@ export function animate() {
 //     nIntervId = null;
 // }
 
+let allCircles = svg1.selectAll('circle')
+    .data(titanic)
+let nbDead = 0;
+let nbAlive = 0;
+
 // Step 0
 function step0() {
 
-
-    let allCircles = svg1.selectAll('circle')
-        .data(titanic)
-    let nbDead = 0;
-    let nbAlive = 0;
     allCircles.enter()
         .merge(allCircles)
         .transition(d3.transition()
             .duration(500)
             .ease(d3.easeLinear))
-            .attr('fill', 'transparent')
-            .attr('opacity', 1.0)
+        .attr('fill', 'transparent')
+        .attr('opacity', 1.0)
 }
 
 //Step 1
@@ -296,15 +304,15 @@ function step1() {
     //     let cy = 0
     // })
 
-    let allCircles = svg1.selectAll('circle')
-        .data(titanic)
     allCircles.enter()
         .merge(allCircles)
         .transition(d3.transition()
             .duration(500)
             .ease(d3.easeLinear))
-            .attr('fill', 'white')
-            .attr('opacity', 1.0)
+        // .attr('cx', (i % 50) * 20 + (((width - (49 * 20)))/2))
+        // .attr('cy', cy)
+        .attr('fill', 'white')
+        .attr('opacity', 1.0)
 }
 
 // // Fonction de mise à jour du graphique
@@ -326,120 +334,243 @@ function step2() {
     //     }
     // })
 
-    let allCircles = svg1.selectAll('circle')
-        .data(titanic)
-    let nbDead = 0;
-    let nbAlive = 0;
     allCircles.enter()
         .merge(allCircles)
         .transition(d3.transition()
             .duration(1000)
             .ease(d3.easeLinear))
-            // .attr('fill', function(d) {
-            //     // console.log(d.survived);
-            //     if (d.survived === 1) {
-            //         nbAlive++;
-            //         return "transparent"
-            //     } else {
-            //         nbDead++;
-            //         return 'white'
-            //     }
-            // })
-            .attr('opacity', 1.0)
-            .attr('cy', function(d, i) {
-                // sort with survived first
-                // return titanicSurvivedSort[i].cx
-                if (d.survived === 1) {
-                    return -500;
-                }else {
-                    // keep same cx
-                    return d.cy;
-                }
-            })
+        // .attr('fill', function(d) {
+        //     // console.log(d.survived);
+        //     if (d.survived === 1) {
+        //         nbAlive++;
+        //         return "transparent"
+        //     } else {
+        //         nbDead++;
+        //         return 'white'
+        //     }
+        // })
+        .attr('opacity', 1.0)
+        // .attr('cx', (i % 50) * 20 + (((width - (49 * 20)))/2))
+        .attr('cy', function (d, i) {
+            // sort with survived first
+            // return titanicSurvivedSort[i].cx
+            if (d.survived === 1) {
+                return -500;
+            } else {
+                // keep same cy
+                return d.cy;
+            }
+        })
 
-            //     if (d.survived === 1) {
-            //         cx = (i % 50) * 20 + 10
-            //     } else {
-            //         cx = (50 - i % 50) * 20 + 10
-            //     }
-            //     return cx
-            // })
+    //     if (d.survived === 1) {
+    //         cx = (i % 50) * 20 + 10
+    //     } else {
+    //         cx = (50 - i % 50) * 20 + 10
+    //     }
+    //     return cx
+    // })
 
-            //     cx = (i % 50) * 20 + 10
-            //     console.log('cx ' + cx);
-            //     return d.cx
-            // })
-            // .attr('cy', function(d, i) {
-                // return titanicSurvivedSort[i].cy
-                // Sort with survived = 1 first
-            //     if (d.survived === 1) {
-            //         cy = Math.floor(i / 50) * 20 + 10
-            //     } else {
-            //         cy = (50 - Math.floor(i / 50)) * 20 + 10
-            //     }
-            //     return cy
-            // })
-            //     cy = Math.floor(i / 50) * 20 + 10
-            //     console.log('cy ' + cy);
-            //     return d.cy
-                
-            // })
-            // console.log('nbAlive : ' + nbAlive);
-            // console.log('nbDead : ' + nbDead);
+    //     cx = (i % 50) * 20 + 10
+    //     console.log('cx ' + cx);
+    //     return d.cx
+    // })
+    // .attr('cy', function(d, i) {
+    // return titanicSurvivedSort[i].cy
+    // Sort with survived = 1 first
+    //     if (d.survived === 1) {
+    //         cy = Math.floor(i / 50) * 20 + 10
+    //     } else {
+    //         cy = (50 - Math.floor(i / 50)) * 20 + 10
+    //     }
+    //     return cy
+    // })
+    //     cy = Math.floor(i / 50) * 20 + 10
+    //     console.log('cy ' + cy);
+    //     return d.cy
+
+    // })
+    // console.log('nbAlive : ' + nbAlive);
+    // console.log('nbDead : ' + nbDead);
 
 }
 
 
-//Step 3
-function step3() {
+//Step 3a
+function step3a() {
 
-    let allCircles = svg1.selectAll('circle')
-        .data(titanic)
-    let nbDead = 0;
-    let nbAlive = 0;
     allCircles.enter()
         .merge(allCircles)
         .transition(d3.transition()
             .duration(500)
             .ease(d3.easeLinear))
-            .attr('opacity', function(d) {
-                // console.log(d.survived);
-                if (d.survived === 0) {
-                    return d.pclass /3;
-                } 
-            })
-            .attr('cx', function(d, i) {
-                // sort with survived first
-                // console.log(d.pclass);
-                return titanic[i].cx
-                // Sort with survived = 1 first
+        .attr('opacity', function (d) {
+            // console.log(d.survived);
+            if (d.survived === 0) {
+                return d.pclass / 3;
+            }
+        })
+    // .attr('cx', function(d, i) {
+    //     // sort with survived first
+    //     // console.log(d.pclass);
+    //     // return titanic[i].cx
+    //     // Sort with survived = 1 first
 
-                if (d.pclass == 1) {
-                    cx = (i % 50) * 20 + 10
-                } else {
-                    cx = (50 - i % 50) * 20 + 10
-                }
-                return cx
-            })
+    //     if (d.pclass === 1) {
+    //         cx = -500
+    //     } else {
+    //         cx = (i % 50) * 20 + (((width - (49 * 20)))/2);
+    //     }
+    //     return cx
+    // })
 
-            //     cx = (i % 50) * 20 + 10
-            //     console.log('cx ' + cx);
-            //     return d.cx
-            // })
-            .attr('cy', function(d, i) {
-                return titanic[i].cy
-                // Sort with survived = 1 first
-                if (d.survived === 1) {
-                    cy = Math.floor(i / 50) * 20 + 10
-                } else {
-                    cy = (50 - Math.floor(i / 50)) * 20 + 10
-                }
-                return cy
-            })
-            //     cy = Math.floor(i / 50) * 20 + 10
-            //     console.log('cy ' + cy);
-            //     return d.cy
-                
-            // })
+    // //     cx = (i % 50) * 20 + 10
+    // //     console.log('cx ' + cx);
+    // //     return d.cx
+    // // })
+    // .attr('cy', function(d, i) {
+    //     // sort with survived first
+    //     // return titanicSurvivedSort[i].cx
+    //     if (d.survived === 1) {
+    //         return -500;
+    //     }else {
+    //         // keep same cy
+    //         return d.cy;
+    //     }
+    // })
+    // //     cy = Math.floor(i / 50) * 20 + 10
+    // //     console.log('cy ' + cy);
+    // //     return d.cy
+
+    // // })
 }
+
+//Step 3b
+function step3b() {
+
+    allCircles.enter()
+        .merge(allCircles)
+        .transition(d3.transition()
+            .duration(500)
+            .ease(d3.easeLinear))
+        .attr('opacity', function (d) {
+            // console.log(d.survived);
+            if (d.survived === 0) {
+                return d.pclass / 3;
+            }
+        })
+        .attr('cx', function (d, i) {
+            // sort with survived first
+            // console.log(d.pclass);
+            // return titanic[i].cx
+            // Sort with survived = 1 first
+
+            if (d.pclass === 1) {
+                cx = -500
+            } else {
+                cx = (i % 50) * 20 + (((width - (49 * 20))) / 2);
+            }
+            return cx
+        })
+
+        //     cx = (i % 50) * 20 + 10
+        //     console.log('cx ' + cx);
+        //     return d.cx
+        // })
+        .attr('cy', function (d, i) {
+            // sort with survived first
+            // return titanicSurvivedSort[i].cx
+            if (d.survived === 1) {
+                return -500;
+            } else {
+                // keep same cy
+                return d.cy;
+            }
+        })
+    //     cy = Math.floor(i / 50) * 20 + 10
+    //     console.log('cy ' + cy);
+    //     return d.cy
+
+    // })
+}
+
+// Step 3c
+function step3c() {
+
+    allCircles.enter()
+        .merge(allCircles)
+        .transition(d3.transition()
+            .duration(500)
+            .ease(d3.easeLinear))
+        .attr('opacity', function (d) {
+            // console.log(d.survived);
+            if (d.survived === 0) {
+                return d.pclass / 3;
+            }
+        })
+        .attr('cx', function (d, i) {
+            // sort with survived first
+            // console.log(d.pclass);
+            // return titanic[i].cx
+            // Sort with survived = 1 first
+
+            if (d.pclass === 1) {
+                cx = -500
+            } else if (d.pclass === 2) {
+                cx = width + 500
+            } else {
+                cx = (i % 50) * 20 + (((width - (49 * 20))) / 2);
+            }
+            return cx
+        })
+
+        //     cx = (i % 50) * 20 + 10
+        //     console.log('cx ' + cx);
+        //     return d.cx
+        // })
+        .attr('cy', function (d, i) {
+            // sort with survived first
+            // return titanicSurvivedSort[i].cx
+            if (d.survived === 1) {
+                return -500;
+            } else {
+                // keep same cy
+                return d.cy;
+            }
+        })
+    //     cy = Math.floor(i / 50) * 20 + 10
+    //     console.log('cy ' + cy);
+    //     return d.cy
+
+    // })
+
+    d3.select('#problematique').attr('class', 'hidden')
+}
+
+// Step4
+function step4() {
+    allCircles.enter()
+        .merge(allCircles)
+        .transition(d3.transition()
+            .duration(500)
+            .ease(d3.easeLinear))
+        .attr('opacity', 0)
+
+    d3.select('#problematique').attr('class', '')
+    // ^ c'est le paragraphe (écrit dans index.html, géré dans index.css) qui de base a une class .hidden qu'on enlève ici et rajoute à Step5 (et Step3)
+}
+
+// Step5
+function step5() {
+    // d3.select('#problematique').enter()
+    //     .merge(d3.select('#problematique'))
+    //     .transition(d3.transition()
+    //         .duration(500)
+    //         .ease(d3.easeLinear))
+    //     .attr('class', 'hidden')
+    // ^ Ca fonctionne pas… :(
+    d3.select('#problematique').attr('class', 'hidden')
+
+    // AJOUTER DE QUOI MONTRER LA MOSAÏQUE DE CHIFFRE.
+}
+
 animate()

@@ -101,7 +101,7 @@ document.addEventListener("wheel", function (e) {
   let variation = parseInt(e.deltaY);
     totalScroll += variation;
 
-  console.log("totalScroll: " + totalScroll);
+  // console.log("totalScroll: " + totalScroll);
   if (totalScroll < 0) {
     scroll = true;
     alreadyPositioned = false;

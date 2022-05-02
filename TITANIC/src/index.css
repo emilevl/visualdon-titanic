@@ -3,10 +3,13 @@ body::-webkit-scrollbar {
 }
 
 body {
-  overflow-y: scroll; /* Add the ability to scroll */
+  overflow-y: scroll;
+  /* Add the ability to scroll */
   overflow-x: hidden;
-  -ms-overflow-style: none;  /* IE and Edge */
-  scrollbar-width: none;  /* Firefox */
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
   margin: 0;
   justify-content: center;
   align-items: center;
@@ -36,13 +39,13 @@ h1#title {
   /* padding: 20px; */
   margin: 0;
   position: relative;
-  background: linear-gradient(180deg, rgba(0,81,181,1) 0%, rgba(0,40,175,1) 50%, rgba(0,0,100,1) 100%) no-repeat;
+  background: linear-gradient(180deg, rgba(0, 81, 181, 1) 0%, rgba(0, 40, 175, 1) 50%, rgba(0, 0, 100, 1) 100%) no-repeat;
 }
 
 #box.full-screen {
-  position: fixed; 
-  top: 0; 
-  left: 0; 
+  position: fixed;
+  top: 0;
+  left: 0;
   z-index: 999
 }
 
@@ -51,6 +54,7 @@ h1#title {
   margin-bottom: -40px;
   background-color: white;
 }
+
 #boat {
   transform-box: fill-box;
   transform-origin: center;
@@ -77,6 +81,9 @@ h1#title {
   color: white;
 }
 
+.hidden {
+  visibility:hidden
+}
 
 .logo.is-animation {
   margin-top: 0.6em;
@@ -93,34 +100,42 @@ h1#title {
 .logo.is-animation span:nth-of-type(1) {
   animation-delay: 0s;
 }
+
 .logo.is-animation span:nth-of-type(2) {
   animation-delay: 0.1s;
 }
+
 .logo.is-animation span:nth-of-type(3) {
   animation-delay: 0.2s;
 }
+
 .logo.is-animation span:nth-of-type(4) {
   animation-delay: 0.3s;
 }
+
 .logo.is-animation span:nth-of-type(5) {
   animation-delay: 0.4s;
 }
+
 .logo.is-animation span:nth-of-type(6) {
-animation-delay: 0.5s;
+  animation-delay: 0.5s;
 }
+
 .logo.is-animation span:nth-of-type(7) {
-animation-delay: 0.6s;
+  animation-delay: 0.6s;
 }
 
 
-@keyframes wave-text{
-  00%{
+@keyframes wave-text {
+  00% {
     transform: translateY(0em);
   }
-  60%{
+
+  60% {
     transform: translateY(-0.1em);
   }
-  100%{
+
+  100% {
     transform: translateY(0em);
   }
 }

@@ -48,7 +48,18 @@ function getSixBiggestNumber(data) {
     return sorted.slice(0, 6);
 }
 
-console.log('6 biggest numbers:', getSixBiggestNumber(nbOccurences));
+// console.log('6 biggest numbers:', getSixBiggestNumber(nbOccurences));
+console.log(smallestValue(ticketNumbers));
+
+// function that calculates a number to return between 11 and 300
+function calculateSize(number) {
+    // const max = d3.max(biggestValue(nbOccurences));
+    // const min = d3.min(smallestValue(nbOccurences));
+    const scale = scaleLinear()
+        .domain([1, 300])
+        .range([75, 300]);
+    return scale(number); 
+}
 
 // array.forEach(element => {
     
@@ -69,7 +80,7 @@ var layout = cloud()
     .padding(5)
     .rotate(0)
     .font("Impact")
-    .fontSize(function(d) { console.log("SIZE" + d.size); return d.size; })
+    .fontSize(function(d) { return calculateSize(d.size); })
     .on("end", draw);
 
 layout.start();
@@ -177,6 +188,8 @@ function draw(words) {
         .attr("height", height)
         .style("fill", "white")
       .append("g")
+        .style('width', width)
+        .style('height', height)
         .attr("transform", "translate(" + layout.size()[0] / 2 + "," + layout.size()[1] / 2 + ")")
       .selectAll("text")
         .data(words)

@@ -62,7 +62,7 @@ h1#title {
 }
 
 /* SVG full screen*/
-#svg-allPassengers {
+#svg-allPassengers, #cloud {
   position: absolute;
   width: 100%;
   height: 100%;

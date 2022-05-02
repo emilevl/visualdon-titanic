@@ -2,6 +2,7 @@ import * as d3 from 'd3';
 import titanic from '../../data/titanic.csv';
 
 import { getTotalScroll, setTotalScroll } from '../index.js';
+import { step5 } from './luckyNumbers.js';
 
 setTotalScroll(20000);
 
@@ -12,6 +13,7 @@ d3.select("body")
 let margin = { top: 10, right: 20, bottom: 30, left: 50 },
     width = window.innerWidth,
     height = window.innerHeight;
+let step = 0;
 
 // let svg = d3.select("#graph")
 //     .append("svg")
@@ -238,36 +240,54 @@ export function animate() {
     if (getTotalScroll() < 500) {
         console.log('transparent');
         d3.select('#titre').text('STEP 0 : INTRODUCTION')
+        step = 0;
         step0();
     } else if (getTotalScroll() >= 500 && getTotalScroll() < 2000) {
         console.log('STEP 1');
         d3.select('#titre').text('STEP 1 : EVERYONE')
+        step = 1;
         step1();
     } else if (getTotalScroll() >= 2000 && getTotalScroll() < 3500) {
         console.log('STEP 2');
         d3.select('#titre').text('STEP 2 : DEADS')
+        step = 2;
         step2();
     } else if (getTotalScroll() >= 3500 && getTotalScroll() < 4250) {
         console.log('STEP 3a');
         d3.select('#titre').text('STEP 3 : DEADS BY CLASS – Distinction opacité')
+        step = 3;
         step3a();
     } else if (getTotalScroll() >= 4250 && getTotalScroll() < 5000) {
         console.log('STEP 3b');
         d3.select('#titre').text('STEP 3 : DEADS BY CLASS — Firstclass out')
+        step = 3;
         step3b();
     } else if (getTotalScroll() >= 5000 && getTotalScroll() < 5750) {
         console.log('STEP 3b');
         d3.select('#titre').text('STEP 3 : DEADS BY CLASS — Secondclass out')
+        step = 3;
         step3c();
-    }
-    else if (getTotalScroll() >= 5750 && getTotalScroll() < 7250) {
+    } else if (getTotalScroll() >= 5750 && getTotalScroll() < 7250) {
         console.log('STEP 4');
         d3.select('#titre').text('STEP 4 : Notre problématique')
+        step = 4;
         step4();
     } else if (getTotalScroll() >= 7250 && getTotalScroll() < 9750) {
         console.log('STEP 5');
         d3.select('#titre').text('STEP 5 : Mosaïque de chiffre')
+        if (d3.select('#cloud').classed('hidden')) {
+            // d3.select('#cloud').attr('class', 'visible');
+            d3.select('#cloud').classed('hidden', false);
+        }
+        step = 5;
         step5();
+    }
+
+    if (step !== 5) {
+        if (!d3.select('#cloud').classed('hidden')) {
+            // d3.select('#cloud').attr('class', 'visible');
+            d3.select('#cloud').classed('hidden', true);
+        }
     }
 }
 
@@ -557,20 +577,6 @@ function step4() {
 
     d3.select('#problematique').attr('class', '')
     // ^ c'est le paragraphe (écrit dans index.html, géré dans index.css) qui de base a une class .hidden qu'on enlève ici et rajoute à Step5 (et Step3)
-}
-
-// Step5
-function step5() {
-    // d3.select('#problematique').enter()
-    //     .merge(d3.select('#problematique'))
-    //     .transition(d3.transition()
-    //         .duration(500)
-    //         .ease(d3.easeLinear))
-    //     .attr('class', 'hidden')
-    // ^ Ca fonctionne pas… :(
-    d3.select('#problematique').attr('class', 'hidden')
-
-    // AJOUTER DE QUOI MONTRER LA MOSAÏQUE DE CHIFFRE.
 }
 
 animate()

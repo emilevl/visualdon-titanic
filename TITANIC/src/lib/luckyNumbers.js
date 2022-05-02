@@ -8,6 +8,28 @@ const ticketNumbers = new Array()
 const deadPassengers = titanic.filter(elm => !elm.survived)
 const nbOccurences = {}
 
+// Définition des marges
+
+const margin = {top: 20, right: 10, bottom: 60, left: 60};
+const width = window.innerWidth,
+height = window.innerHeight;
+
+export function step5() {
+    // d3.select('#problematique').enter()
+    //     .merge(d3.select('#problematique'))
+    //     .transition(d3.transition()
+    //         .duration(500)
+    //         .ease(d3.easeLinear))
+    //     .attr('class', 'hidden')
+    // ^ Ca fonctionne pas… :(
+    d3.select('#problematique').attr('class', 'hidden')
+
+    // AJOUTER DE QUOI MONTRER LA MOSAÏQUE DE CHIFFRE.
+    // show the cloud
+    
+    // d3.select('#cloud').attr('class', 'hidden');
+}
+
 //console.log(deadPassengers);
 
 getTicketValues(deadPassengers);
@@ -37,16 +59,17 @@ console.log('6 biggest numbers:', getSixBiggestNumber(nbOccurences));
 //     return {text: d, size: nbOccurences[`${d}`]};
 //   }));
 // console.log(nbOccurences);
-
+console.log("SIZE" + uniqueElm.length)
 var layout = cloud()
-    .size([500, 500])
+    .size([width, height])
     .words(uniqueElm.map(function(d) {
-      return {text: d, size: nbOccurences[d] / 500 * 100};
+        console.log(nbOccurences[`${d}`])
+      return {text: d, size: nbOccurences[d] * 500/width};
     }))
     .padding(5)
     .rotate(0)
     .font("Impact")
-    .fontSize(function(d) { return d.size; })
+    .fontSize(function(d) { console.log("SIZE" + d.size); return d.size; })
     .on("end", draw);
 
 layout.start();
@@ -148,22 +171,26 @@ function onlyUnique(value, index, self) {
 
 // Function from the d3-cloud git
 function draw(words) {
-    d3.select("#step2").append("svg")
-        .attr("width", layout.size()[0])
-        .attr("height", layout.size()[1])
+    d3.select("#step1").append("svg")
+        .attr('id', 'cloud')
+        .attr("width", width)
+        .attr("height", height)
         .style("fill", "white")
       .append("g")
         .attr("transform", "translate(" + layout.size()[0] / 2 + "," + layout.size()[1] / 2 + ")")
       .selectAll("text")
         .data(words)
       .enter().append("text")
-        .style("font-size", function(d) { return d.size + "px"; })
+        .style("font-size", function(d) { return d.size  + "px"; })
         .style("font-family", "Impact")
         .attr("text-anchor", "middle")
         .attr("transform", function(d) {
           return "translate(" + [d.x, d.y] + ")rotate(" + d.rotate + ")";
         })
         .text(function(d) { return d.text; });
+
+        // hide the cloud
+        d3.select('#cloud').attr('class', 'hidden');
   }
   
 
@@ -173,11 +200,6 @@ function draw(words) {
 // console.log(smallestValue(life, 2021));
 const body = d3.select("body");
 
-// Définition des marges
-
-const margin = {top: 20, right: 10, bottom: 60, left: 60};
-const width = 1500 - margin.left - margin.right,
-height = 500 - margin.top - margin.bottom;
 
 // Création du graph de base
 // d3.select("#step2")

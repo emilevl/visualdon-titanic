@@ -335,10 +335,10 @@ function step1() {
         .attr('opacity', 1.0)
         .attr('cx', (d, i) => {
             return d.cx
-            })
+        })
         .attr('cy', (d, i) => {
             return d.cy
-            })
+        })
 }
 
 // // Fonction de mise à jour du graphique
@@ -378,7 +378,7 @@ function step2() {
         .attr('opacity', 1.0)
         .attr('cx', (d, i) => {
             return d.cx
-            })
+        })
         // .attr('cx', (i % 50) * 20 + (((width - (49 * 20)))/2))
         .attr('cy', function (d, i) {
             // sort with survived first
@@ -427,19 +427,48 @@ function step2() {
 //Step 3a
 function step3a() {
 
+    let indexFirstClass = 0;
+    let indexSecondClass = 0;
+    let indexThirdClass = 0;
+    let position;
+
     allCircles.enter()
         .merge(allCircles)
         .transition(d3.transition()
             .duration(500)
             .ease(d3.easeLinear))
-        .attr('opacity', function (d) {
+        // .attr('opacity', function (d) {
+        //     // console.log(d.survived);
+        //     if (d.survived === 0) {
+        //         return d.pclass / 3;
+        //     }
+        // })
+        .attr('fill', function (d) {
             // console.log(d.survived);
-            if (d.survived === 0) {
-                return d.pclass / 3;
+            if (d.survived !== 1) {
+                if (d.pclass === 1) {
+                    return '#587fcc';
+                } else if (d.pclass === 2) {
+                    return '#99A2D0'
+                } else {
+                    return 'white';
+                }
             }
         })
         .attr('cx', (d, i) => {
-            return d.cx
+            // 16
+            // console.log();
+            if (d.pclass === 1) {
+                position = ((indexFirstClass % 16) * 20 + (((width - (49 * 20))) / 2))
+                indexFirstClass++;
+            } else if (d.pclass === 2) {
+                position = ((indexSecondClass % 16) * 20 + (((width - (49 * 20))) / 2)) + 320 + 20
+                indexSecondClass++;
+            } else {
+                position = ((indexThirdClass % 16) * 20 + (((width - (49 * 20))) / 2)) + 640 + 40
+                indexThirdClass++;
+            }
+            return position;
         })
         .attr('cy', (d, i) => {
             if (d.survived === 1) {
@@ -449,6 +478,7 @@ function step3a() {
                 return d.cy;
             }
         })
+    console.log(79 % 16);
     // .attr('cx', function(d, i) {
     //     // sort with survived first
     //     // console.log(d.pclass);
@@ -487,29 +517,42 @@ function step3a() {
 //Step 3b
 function step3b() {
 
+    let indexFirstClass = 0;
+    let indexSecondClass = 0;
+    let indexThirdClass = 0;
+    let position;
+
     allCircles.enter()
         .merge(allCircles)
         .transition(d3.transition()
             .duration(500)
             .ease(d3.easeLinear))
-        .attr('opacity', function (d) {
+        .attr('fill', function (d) {
             // console.log(d.survived);
-            if (d.survived === 0) {
-                return d.pclass / 3;
+            if (d.survived !== 1) {
+                if (d.pclass === 1) {
+                    return '#587fcc';
+                } else if (d.pclass === 2) {
+                    return '#99A2D0'
+                } else {
+                    return 'white';
+                }
             }
         })
-        .attr('cx', function (d, i) {
-            // sort with survived first
-            // console.log(d.pclass);
-            // return titanic[i].cx
-            // Sort with survived = 1 first
-
+        .attr('cx', (d, i) => {
+            // 16
+            // console.log();
             if (d.pclass === 1) {
-                cx = -500
+                position = -500
+                indexFirstClass++;
+            } else if (d.pclass === 2) {
+                position = ((indexSecondClass % 16) * 20 + (((width - (49 * 20))) / 2)) + 320 + 20
+                indexSecondClass++;
             } else {
-                cx = (i % 50) * 20 + (((width - (49 * 20))) / 2);
+                position = ((indexThirdClass % 16) * 20 + (((width - (49 * 20))) / 2)) + 640 + 40
+                indexThirdClass++;
             }
-            return cx
+            return position;
         })
 
         //     cx = (i % 50) * 20 + 10
@@ -536,31 +579,42 @@ function step3b() {
 // Step 3c
 function step3c() {
 
+    let indexFirstClass = 0;
+    let indexSecondClass = 0;
+    let indexThirdClass = 0;
+    let position;
+
     allCircles.enter()
         .merge(allCircles)
         .transition(d3.transition()
             .duration(500)
             .ease(d3.easeLinear))
-        .attr('opacity', function (d) {
+        .attr('fill', function (d) {
             // console.log(d.survived);
-            if (d.survived === 0) {
-                return d.pclass / 3;
+            if (d.survived !== 1) {
+                if (d.pclass === 1) {
+                    return '#587fcc';
+                } else if (d.pclass === 2) {
+                    return '#99A2D0'
+                } else {
+                    return 'white';
+                }
             }
         })
-        .attr('cx', function (d, i) {
-            // sort with survived first
-            // console.log(d.pclass);
-            // return titanic[i].cx
-            // Sort with survived = 1 first
-
+        .attr('cx', (d, i) => {
+            // 16
+            // console.log();
             if (d.pclass === 1) {
-                cx = -500
+                position = -500
+                indexFirstClass++;
             } else if (d.pclass === 2) {
-                cx = width + 500
+                position = -500
+                indexSecondClass++;
             } else {
-                cx = (i % 50) * 20 + (((width - (49 * 20))) / 2);
+                position = ((indexThirdClass % 16) * 20 + (((width - (49 * 20))) / 2)) + 640 + 40
+                indexThirdClass++;
             }
-            return cx
+            return position;
         })
 
         //     cx = (i % 50) * 20 + 10

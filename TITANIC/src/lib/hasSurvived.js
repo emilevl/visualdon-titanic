@@ -239,22 +239,22 @@ export function animate() {
     // regarder si l'intervalle a été déjà démarré
     if (getTotalScroll() < 500) {
         console.log('transparent');
-        d3.select('#titre').text('STEP 0 : INTRODUCTION')
+        d3.select('#titre').text('Le 10 avril 1912 , 1309 passagers ont embarqué sur le Titanic.')
         step = 0;
         step0();
     } else if (getTotalScroll() >= 500 && getTotalScroll() < 2000) {
         console.log('STEP 1');
-        d3.select('#titre').text('STEP 1 : EVERYONE')
+        d3.select('#titre').text('Le 10 avril 1912 , 1309 passagers ont embarqué sur le Titanic.')
         step = 1;
         step1();
     } else if (getTotalScroll() >= 2000 && getTotalScroll() < 3500) {
         console.log('STEP 2');
-        d3.select('#titre').text('STEP 2 : DEADS')
+        d3.select('#titre').text('Parmis eux, seulement ' + compteurPassengersSurvived + ' ont survécu.')
         step = 2;
         step2();
     } else if (getTotalScroll() >= 3500 && getTotalScroll() < 4250) {
         console.log('STEP 3a');
-        d3.select('#titre').text('STEP 3 : DEADS BY CLASS – Distinction opacité')
+        d3.select('#titre').text('Les passagers...')
         step = 3;
         step3a();
     } else if (getTotalScroll() >= 4250 && getTotalScroll() < 5000) {
@@ -450,9 +450,9 @@ function step3a() {
                     return '#587fcc';
                 } else if (d.pclass === 2) {
                     return '#99A2D0'
-                } else {
-                    return 'white';
                 }
+            } else {
+                return 'white';
             }
         })
         .attr('cx', (d, i) => {

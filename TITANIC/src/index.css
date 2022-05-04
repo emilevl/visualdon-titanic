@@ -86,8 +86,16 @@ body {
     font-weight: lighter;
 }
 
+#cloud:not(.hidden) {
+  opacity: 1;
+  visibility: visible;
+  transition: visibility 0s, opacity 0.5s linear;
+}
+
 .hidden {
-  visibility:hidden
+  visibility:hidden;
+  opacity: 0;
+  transition: visibility 0.5s, opacity 0.5s linear;
 }
 
 .logo.is-animation {
@@ -163,4 +171,23 @@ body {
   text-align: center;
   /* padding: 20px; */
   margin: 0;
+}
+
+#bigText {
+  position: absolute;
+  width: 60%;
+  min-width: 980px;
+  display: block;
+  top: 30%;
+  text-align: center;
+  font-family: FreeMono, monospace;
+  color: white;
+  margin: 0;
+  padding-top: 10px;
+}
+
+#bigText h1 {
+  font-size: 2.5em;
+  font-variant: all-petite-caps;
+  transition: visibility 0.5s, opacity 0.5s linear;
 }

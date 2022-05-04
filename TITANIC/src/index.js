@@ -21,6 +21,7 @@ const maxHeight = window.innerHeight;
 // console.log(maxHeight)
 let numSteps = 10.0;
 let totalScroll = 100000;
+export let stepGap = 500;
 let alreadyPositioned = false;
 
 let boxElement;
@@ -68,7 +69,6 @@ function handleIntersect(entries, observer) {
     prevRatio = entry.intersectionRatio;
 
     if (prevRatio >= 0.9) {
-      console.log('DEBUT ANIMATION');
       totalScroll = 0;
       scroll = false;
       toggleScroll();
@@ -88,7 +88,6 @@ function toggleScroll() {
     if (totalScroll > -150 && !alreadyPositioned) {
       window.scrollTo(0, maxHeight * 0.88)
       alreadyPositioned = true;
-      console.log("FIN ANIMATION")
     }
   }
 }
@@ -109,6 +108,31 @@ document.addEventListener("wheel", function (e) {
   }
   return false;
 
+}, true);
+
+// Add event listener on arrow keys
+document.addEventListener("keydown", function (e) {
+
+  // If the key is the up arrow or the left arrow
+  if (e.keyCode == 38 || e.keyCode == 37) {
+    console.log("UP");
+    totalScroll -= stepGap;
+    animate();
+    if (totalScroll < 0) {
+      scroll = true;
+      alreadyPositioned = false;
+      toggleScroll();
+    }
+  } else if (e.keyCode === 40 || e.keyCode === 39) {
+    console.log("DOWN");
+    totalScroll += stepGap;
+    animate();
+    if (totalScroll < 0) {
+      scroll = true;
+      alreadyPositioned = false;
+      toggleScroll();
+    }
+  }
 }, true);
 
 export function getTotalScroll() {

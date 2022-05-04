@@ -333,6 +333,12 @@ function step1() {
         // .attr('cy', cy)
         .attr('fill', 'white')
         .attr('opacity', 1.0)
+        .attr('cx', (d, i) => {
+            return d.cx
+            })
+        .attr('cy', (d, i) => {
+            return d.cy
+            })
 }
 
 // // Fonction de mise à jour du graphique
@@ -370,6 +376,9 @@ function step2() {
         //     }
         // })
         .attr('opacity', 1.0)
+        .attr('cx', (d, i) => {
+            return d.cx
+            })
         // .attr('cx', (i % 50) * 20 + (((width - (49 * 20)))/2))
         .attr('cy', function (d, i) {
             // sort with survived first
@@ -427,6 +436,17 @@ function step3a() {
             // console.log(d.survived);
             if (d.survived === 0) {
                 return d.pclass / 3;
+            }
+        })
+        .attr('cx', (d, i) => {
+            return d.cx
+        })
+        .attr('cy', (d, i) => {
+            if (d.survived === 1) {
+                return -500;
+            } else {
+                // keep same cy
+                return d.cy;
             }
         })
     // .attr('cx', function(d, i) {

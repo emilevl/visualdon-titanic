@@ -57,7 +57,7 @@ function calculateSize(number) {
     // const min = d3.min(smallestValue(nbOccurences));
     const scale = scaleLinear()
         .domain([1, 300])
-        .range([75, 300]);
+        .range([60, 200]);
     return scale(number); 
 }
 

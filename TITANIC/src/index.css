@@ -18,15 +18,6 @@ body {
   font-weight: bold;
 }
 
-h1#title {
-  font-size: 250px;
-  font-family: Montserrat;
-  text-align: center;
-  font-variant: all-petite-caps;
-  margin: 0;
-}
-
-
 #box {
   background-color: rgba(40, 40, 190, 255);
   border: 0px solid rgb(20, 20, 120);
@@ -71,14 +62,28 @@ h1#title {
   z-index: -1;
 }
 
-#description {
+#div-description {
   position: absolute;
-  width: 100%;
+  width: 60%;
+  min-width: 980px;
   display: block;
-  top: 80%;
-  left: 0;
-  text-align: center;
+  top: 75%;
+  text-align: left;
+  font-family: FreeMono, monospace;
   color: white;
+  margin: 0;
+  padding-top: 10px;
+}
+
+#titre-desc {
+  font-size: 0.7em;
+  font-variant: all-petite-caps;
+}
+
+#p-desc {
+    font-size: 0.5em;
+    /* font-variant: all-petite-caps; */
+    font-weight: lighter;
 }
 
 .hidden {

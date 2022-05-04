@@ -15,15 +15,6 @@ let margin = { top: 10, right: 20, bottom: 30, left: 50 },
     height = window.innerHeight;
 let step = 0;
 
-// let svg = d3.select("#graph")
-//     .append("svg")
-//     .attr("width", width + margin.left + margin.right)
-//     .attr("height", height + margin.top + margin.bottom)
-//     .append("g")
-//     .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-
-d3.select('.step').append('div').attr('id', 'description').append('h1').attr('id', 'titre').text("L'entier des passagers")
-
 let compteurPassengers = 0
 let compteurPassengersSurvived = 0
 let compteurPassengersDead = 0
@@ -58,17 +49,24 @@ let svg1 = d3.select('#step1')
 // set the cx and cy for each passenger
 titanic.forEach((passenger, i) => {
     passenger.cx = (i % 50) * 20 + (((width - (49 * 20))) / 2);
-    passenger.cy = Math.floor(i / 50) * 20 + (((height - (26 * 20))) / 2)
+    passenger.cy = Math.floor(i / 50) * 20 + (((height - (26 * 20))) / 4)
 })
 // Create all passengers
 let cx = 0
 let cy = 0
+
+// Connaître la largeur de la zone de points
+// let lastpoint = 49 * 20 + (((width - (49 * 20))) / 2);
+// let prempoint = (((width - (49 * 20))) / 2);
+// let diff = lastpoint - prempoint;
+// console.log('LA DIFF : ' + diff);
+
 for (let i = 0; i < compteurPassengers; i++) {
     //center the circles to the width and height
     cx = (i % 50) * 20 + (((width - (49 * 20))) / 2);
     // console.log(cx);
 
-    cy = Math.floor(i / 50) * 20 + (((height - (26 * 20))) / 2);
+    cy = Math.floor(i / 50) * 20 + (((height - (26 * 20))) / 4);
     // console.log(cy);
 
     svg1.append('circle')
@@ -81,40 +79,6 @@ for (let i = 0; i < compteurPassengers; i++) {
         .attr('opacity', '0.0')
 }
 d3.select('#svg-allPassengers').attr("width", cx * 6).attr("height", cy + 10)
-
-// // Pour survivants vs morts :
-// let svg2 = d3.select('#step1')
-//     .append('svg')
-//     .attr('id', 'svg-PassDeadAndSurv')
-//     .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-
-// let cx2 = 0
-// let cy2 = 0
-// for (let j = 0; j <= compteurPassengers; j++) {
-//     cx2 = (j % 50) * 20 + 10
-//     // console.log(cx2);
-
-//     cy2 = Math.floor(j / 50) * 20 + 10
-//     // console.log(cy2);
-
-
-//     if (j >= compteurPassengersSurvived) {
-//         svg2.append('circle')
-//             .attr('class', 'circles-passengers')
-//             .attr('cx', cx2)
-//             .attr('cy', cy2)
-//             .attr('r', 5)
-//             .attr('fill', 'red')
-//     } else {
-//         svg2.append('circle')
-//             .attr('class', 'circles-passengers')
-//             .attr('cx', cx2)
-//             .attr('cy', cy2)
-//             .attr('r', 5)
-//             .attr('fill', 'blue')
-//     }
-// }
-// d3.select('#svg-PassDeadAndSurv').attr("width", cx2 * 5).attr("height", cy2 + 10)
 
 // Get numbers of everything Pour survivants vs morts par classe:
 let firstClassTotal = 0;
@@ -154,127 +118,60 @@ titanic.forEach(passenger => {
         undefinedClass++;
     }
 });
-// // console.log(firstClassTotal + ' firstClass');
-// // console.log('firstClass : ' + firstClassAlive + ' ont survécu et ' + firstClassDead + ' sont décédés');
-// // console.log(secondClassTotal + ' secondClass');
-// // console.log('secondClass : ' + secondClassAlive + ' ont survécu et ' + secondClassDead + ' sont décédés');
-// // console.log(thirdClassTotal + ' thirdClass');
-// // console.log('thirdClass : ' + thirdClassAlive + ' ont survécu et ' + thirdClassDead + ' sont décédés');
-// // console.log(undefinedClass + ' undefinedClass');
 
-// let svg3 = d3.select('#step1')
-//     .append('svg')
-//     .attr('id', 'svg-PassDeadAndSurvByClass')
-//     .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-// let cx3 = 0
-// let cy3 = 0
-// for (let k = 0; k <= compteurPassengers; k++) {
-//     cx3 = (k % 50) * 20 + 10
-//     cy3 = Math.floor(k / 50) * 20 + 10
-
-//     if (k < compteurPassengersSurvived) {
-//         if (k < firstClassAlive) {
-//             svg3.append('circle')
-//                 .attr('class', 'circles-passengers')
-//                 .attr('cx', cx3)
-//                 .attr('cy', cy3)
-//                 .attr('r', 5)
-//                 .attr('fill', 'gold')
-//                 .attr('opacity', '1')
-//         } else if (firstClassAlive <= k && k < firstClassAlive + secondClassAlive) {
-//             svg3.append('circle')
-//                 .attr('class', 'circles-passengers')
-//                 .attr('cx', cx3)
-//                 .attr('cy', cy3)
-//                 .attr('r', 5)
-//                 .attr('fill', 'silver')
-//                 .attr('opacity', '0.75')
-//         } else if (firstClassAlive + secondClassAlive <= k) {
-//             svg3.append('circle')
-//                 .attr('class', 'circles-passengers')
-//                 .attr('cx', cx3)
-//                 .attr('cy', cy3)
-//                 .attr('r', 5)
-//                 .attr('fill', '#CD7F32')
-//                 .attr('opacity', '0.25')
-//         }
-//     } else {
-//         if (k < compteurPassengersSurvived + firstClassDead) {
-//             svg3.append('circle')
-//                 .attr('class', 'circles-passengers')
-//                 .attr('cx', cx3)
-//                 .attr('cy', cy3)
-//                 .attr('r', 5)
-//                 .attr('fill', 'red')
-//                 .attr('opacity', '1')
-//         } else if (compteurPassengersSurvived + firstClassDead <= k && k < compteurPassengersSurvived + firstClassDead + secondClassDead) {
-//             svg3.append('circle')
-//                 .attr('class', 'circles-passengers')
-//                 .attr('cx', cx3)
-//                 .attr('cy', cy3)
-//                 .attr('r', 5)
-//                 .attr('fill', 'orange')
-//                 .attr('opacity', '1')
-//         } else if (compteurPassengersSurvived + firstClassDead + secondClassDead <= k) {
-//             svg3.append('circle')
-//                 .attr('class', 'circles-passengers')
-//                 .attr('cx', cx3)
-//                 .attr('cy', cy3)
-//                 .attr('r', 5)
-//                 .attr('fill', 'yellow')
-//                 .attr('opacity', '1')
-//         }
-//     }
-// }
-// d3.select('#svg-PassDeadAndSurvByClass').attr("width", cx3 * 5).attr("height", cy3 + 10)
-
-// console.log('totalScroll DANS hasSurvived : ' + getTotalScroll());
-
-// // Variable où on stocke l'id de notre intervalle
-// let nIntervId;
-
-
+console.log(firstClassTotal + ' firstClass');
+console.log('firstClass : ' + firstClassAlive + ' ont survécu et ' + firstClassDead + ' sont décédés');
+console.log(secondClassTotal + ' secondClass');
+console.log('secondClass : ' + secondClassAlive + ' ont survécu et ' + secondClassDead + ' sont décédés');
+console.log(thirdClassTotal + ' thirdClass');
+console.log('thirdClass : ' + thirdClassAlive + ' ont survécu et ' + thirdClassDead + ' sont décédés');
+console.log(undefinedClass + ' undefinedClass');
 
 export function animate() {
+    
     // regarder si l'intervalle a été déjà démarré
     if (getTotalScroll() < 500) {
         console.log('transparent');
-        d3.select('#titre').text('Le 10 avril 1912 , 1309 passagers ont embarqué sur le Titanic.')
+        d3.select('#titre-desc').html('Le grand départ');
+        d3.select('#p-desc').html('Entre le 10 et le 12 avril 1912 , 1310 personnes embarque sur le Titanic à Southampton, Cherbourg puis Queenstown. Le bâteau quitte le Vieux-Continent direction les Amériques et, pour la plupart de ces passagers, le Rêve américain.')
         step = 0;
         step0();
     } else if (getTotalScroll() >= 500 && getTotalScroll() < 2000) {
         console.log('STEP 1');
-        d3.select('#titre').text('Le 10 avril 1912 , 1309 passagers ont embarqué sur le Titanic.')
         step = 1;
         step1();
     } else if (getTotalScroll() >= 2000 && getTotalScroll() < 3500) {
         console.log('STEP 2');
-        d3.select('#titre').text('Parmis eux, seulement ' + compteurPassengersSurvived + ' ont survécu.')
+        d3.select('#titre-desc').html('Une nuit en enfer');
+        d3.select('#p-desc').html('Dans la nuit du 14 au 15 avril 1912, le Titanic heurte un iceberg et coule en à peine quelques heures. <br>Parmis tous les passagers, seulement ' + compteurPassengersSurvived + ' ont survécu. Les autres - que voici - meurent et se reveront jamais la surface. Bousculades, mort de froid ou de noyade, tout le monde peut être touché.')
         step = 2;
         step2();
     } else if (getTotalScroll() >= 3500 && getTotalScroll() < 4250) {
         console.log('STEP 3a');
-        d3.select('#titre').text('Les passagers...')
+        d3.select('#titre-desc').html('Priorité aux femmes et aux enfants… mais surtout aux riches !');
+        d3.select('#p-desc').html('Parmis les morts, la tendance est claire : <br>Voici la répartition des premières, deuxièmes et troisièmes classes.<br>')
         step = 3;
         step3a();
     } else if (getTotalScroll() >= 4250 && getTotalScroll() < 5000) {
         console.log('STEP 3b');
-        d3.select('#titre').text('STEP 3 : DEADS BY CLASS — Firstclass out')
+        d3.select('#p-desc').html("Parmis les morts, la tendance est claire : <br>Voici la répartition des premières, deuxièmes et troisièmes classes.<br>Alors qu'un tiers des premières classes ont trouvé la mort, le taux de décès en deuxième classe est d'environs cinquante pourcents.")
         step = 3;
         step3b();
     } else if (getTotalScroll() >= 5000 && getTotalScroll() < 5750) {
         console.log('STEP 3b');
-        d3.select('#titre').text('STEP 3 : DEADS BY CLASS — Secondclass out')
+        d3.select('#p-desc').html("Parmis les morts, la tendance est claire : <br>Voici la répartition des premières, deuxièmes et troisièmes classes.<br>Alors qu'un tiers des premières classes ont trouvé la mort, le taux de décès en deuxième classe est d'environs cinquante pourcents. <br>Quant au troisièmes classes, à peine une personne sur 6 n'avait de chance de survie.")
         step = 3;
         step3c();
     } else if (getTotalScroll() >= 5750 && getTotalScroll() < 7250) {
         console.log('STEP 4');
-        d3.select('#titre').text('STEP 4 : Notre problématique')
+        d3.select('#titre-desc').html('Et si tout était écrit ?');
+        d3.select('#p-desc').html("Chacun des passagers a embarqué sur le titanic grâce à un billet. Ce dernier contient une suite de sept caractères alphanumériques.")
         step = 4;
         step4();
     } else if (getTotalScroll() >= 7250 && getTotalScroll() < 9750) {
         console.log('STEP 5');
-        d3.select('#titre').text('STEP 5 : Mosaïque de chiffre')
+        d3.select('#titre-desc').html('Caractère porte malheur');
+        d3.select('#p-desc').html("Voici les caractères ayant le plus apporté la mort au propriétaire du billet")        
         if (d3.select('#cloud').classed('hidden')) {
             // d3.select('#cloud').attr('class', 'visible');
             d3.select('#cloud').classed('hidden', false);
@@ -282,6 +179,7 @@ export function animate() {
         step = 5;
         step5();
     }
+
 
     if (step !== 5) {
         if (!d3.select('#cloud').classed('hidden')) {
@@ -337,7 +235,7 @@ function step1() {
             return d.cx
         })
         .attr('cy', (d, i) => {
-            return d.cy
+            return d.cy;
         })
 }
 
@@ -376,6 +274,7 @@ function step2() {
         //     }
         // })
         .attr('opacity', 1.0)
+        .attr('fill', 'white')
         .attr('cx', (d, i) => {
             return d.cx
         })
@@ -450,6 +349,8 @@ function step3a() {
                     return '#587fcc';
                 } else if (d.pclass === 2) {
                     return '#99A2D0'
+                } else {
+                    return 'white';
                 }
             } else {
                 return 'white';
@@ -478,40 +379,6 @@ function step3a() {
                 return d.cy;
             }
         })
-    console.log(79 % 16);
-    // .attr('cx', function(d, i) {
-    //     // sort with survived first
-    //     // console.log(d.pclass);
-    //     // return titanic[i].cx
-    //     // Sort with survived = 1 first
-
-    //     if (d.pclass === 1) {
-    //         cx = -500
-    //     } else {
-    //         cx = (i % 50) * 20 + (((width - (49 * 20)))/2);
-    //     }
-    //     return cx
-    // })
-
-    // //     cx = (i % 50) * 20 + 10
-    // //     console.log('cx ' + cx);
-    // //     return d.cx
-    // // })
-    // .attr('cy', function(d, i) {
-    //     // sort with survived first
-    //     // return titanicSurvivedSort[i].cx
-    //     if (d.survived === 1) {
-    //         return -500;
-    //     }else {
-    //         // keep same cy
-    //         return d.cy;
-    //     }
-    // })
-    // //     cy = Math.floor(i / 50) * 20 + 10
-    // //     console.log('cy ' + cy);
-    // //     return d.cy
-
-    // // })
 }
 
 //Step 3b
@@ -528,7 +395,6 @@ function step3b() {
             .duration(500)
             .ease(d3.easeLinear))
         .attr('fill', function (d) {
-            // console.log(d.survived);
             if (d.survived !== 1) {
                 if (d.pclass === 1) {
                     return '#587fcc';
@@ -537,6 +403,8 @@ function step3b() {
                 } else {
                     return 'white';
                 }
+            } else {
+                return 'white';
             }
         })
         .attr('cx', (d, i) => {
@@ -554,14 +422,7 @@ function step3b() {
             }
             return position;
         })
-
-        //     cx = (i % 50) * 20 + 10
-        //     console.log('cx ' + cx);
-        //     return d.cx
-        // })
         .attr('cy', function (d, i) {
-            // sort with survived first
-            // return titanicSurvivedSort[i].cx
             if (d.survived === 1) {
                 return -500;
             } else {
@@ -569,11 +430,6 @@ function step3b() {
                 return d.cy;
             }
         })
-    //     cy = Math.floor(i / 50) * 20 + 10
-    //     console.log('cy ' + cy);
-    //     return d.cy
-
-    // })
 }
 
 // Step 3c
@@ -599,6 +455,8 @@ function step3c() {
                 } else {
                     return 'white';
                 }
+            } else {
+                return 'white';
             }
         })
         .attr('cx', (d, i) => {
@@ -616,11 +474,6 @@ function step3c() {
             }
             return position;
         })
-
-        //     cx = (i % 50) * 20 + 10
-        //     console.log('cx ' + cx);
-        //     return d.cx
-        // })
         .attr('cy', function (d, i) {
             // sort with survived first
             // return titanicSurvivedSort[i].cx
@@ -631,13 +484,6 @@ function step3c() {
                 return d.cy;
             }
         })
-    //     cy = Math.floor(i / 50) * 20 + 10
-    //     console.log('cy ' + cy);
-    //     return d.cy
-
-    // })
-
-    d3.select('#problematique').attr('class', 'hidden')
 }
 
 // Step4
@@ -648,9 +494,6 @@ function step4() {
             .duration(500)
             .ease(d3.easeLinear))
         .attr('opacity', 0)
-
-    d3.select('#problematique').attr('class', '')
-    // ^ c'est le paragraphe (écrit dans index.html, géré dans index.css) qui de base a une class .hidden qu'on enlève ici et rajoute à Step5 (et Step3)
 }
 
 animate()

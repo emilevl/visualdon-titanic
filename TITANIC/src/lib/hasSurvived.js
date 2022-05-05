@@ -46,9 +46,8 @@ let svg1 = d3.select('#step1')
     .attr("height", height);
 
 let brokenBoat = d3.select('#broken-boat');
-
-let brokenRight = d3.select('#broken-right')
-    .attr('transform', 'translate(250, 50)')
+let brokenRight = d3.select('#broken-right');
+let brokenLeft = d3.select('#broken-left');
 
 // set the cx and cy for each passenger
 titanic.forEach((passenger, i) => {
@@ -225,7 +224,20 @@ export function animate() {
     } else if (getTotalScroll() >= stepGap*11 && getTotalScroll() < stepGap*12) {
         console.log('STEP 7');
         d3.select('#div-description').classed('hidden', true);
+        // d3.select('#brokenBoat').attr('display', 'none');
         step7();
+    } else if (getTotalScroll() >= stepGap*12) {
+        console.log('STEP 8');
+        // d3.select('#brokenBoat').attr('display', 'block');
+        d3.select('#titre-desc').html('')
+        d3.select('#p-desc').html('')
+        d3.select('#box')
+        .append('button')
+        .attr('z-index', '0')
+        .attr('type', 'button')
+        .attr('onclick', 'window.location.reload(true);')
+        .attr('style', 'padding: 10%')
+        step8();
     }
 }
 
@@ -651,6 +663,13 @@ function step7() {
             }
             
         })
+}
+
+// Le Titanic coule au fond de l'océan
+function step8() {
+    // let brokenBoat;
+    // let brokenRight;
+    // let brokenLeft;
 }
 
 animate()

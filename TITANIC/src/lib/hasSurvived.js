@@ -45,6 +45,11 @@ let svg1 = d3.select('#step1')
     .attr("width", width)
     .attr("height", height);
 
+let brokenBoat = d3.select('#broken-boat');
+
+let brokenRight = d3.select('#broken-right')
+    .attr('transform', 'translate(250, 50)')
+
 // set the cx and cy for each passenger
 titanic.forEach((passenger, i) => {
     passenger.cx = (i % 50) * 20 + (((width - (49 * 20))) / 2);
@@ -133,12 +138,15 @@ export function animate() {
         d3.select('#cloud').classed('hidden', true);
     }
     d3.select('#bigText h1').classed('hidden', true);
+    d3.select('#bigText p').classed('hidden', true);
+    d3.select('#div-description').classed('hidden', false);
 
     // document.getElementById('box').style.background  = "linear-gradient(180deg, rgba(0, 81, 181, 1) 0%, rgba(0, 40, 175, 1) 50%, rgba(0, 0, 100, 1) 100%) no-repeat;";
-    // if (getTotalScroll() > 0) {
-    //     console.log(document.getElementById('box').style.backgroundImage);
-    //     document.getElementById('box').style.backgroundImage  = "linear-gradient(180deg, rgba(0, " + (81 - getTotalScroll/stepGap) + ", " + (181 - getTotalScroll/stepGap) + ", 1) 0%, rgba(0, 40, " + (175 + getTotalScroll/stepGap) + ", 1) 50%, rgba(0, 0, " + (100+ getTotalScroll/stepGap) + ", 1) 100%) no-repeat;";
-    // }
+    if (getTotalScroll() > 0 && scroll == false) {
+        console.log(document.getElementById('box').style);
+        // document.getElementById('box').style.backgroundColor  = "red";
+        // document.getElementById('box').style.background  = "red";
+    }
     if (getTotalScroll() < stepGap) {
         console.log('transparent');
         d3.select('#titre-desc').html('Le grand départ');
@@ -195,9 +203,29 @@ export function animate() {
         step6a();
     } else if (getTotalScroll() >= stepGap*9 && getTotalScroll() < stepGap*10) {
         console.log('STEP 6b');
+        d3.select('#div-description').classed('hidden', true);
+        d3.select('#bigText h1').classed('hidden', false);
+        d3.select('#bigText h1').text("Pour l'un d'eux, mourir sur le titanic était une évidence...");
         d3.select('#titre-desc').html('Le malheureux élu');
         d3.select('#p-desc').html("Le passager possédant le plus de chiffres 'portes-malheurs'.")
         step6b();
+    } else if (getTotalScroll() >= stepGap*10 && getTotalScroll() < stepGap*11) {
+        console.log('STEP 6b');
+        d3.select('#div-description').classed('hidden', true);
+        d3.select('#bigText h1').classed('hidden', false);
+        d3.select('#bigText p').classed('hidden', false);
+        d3.select('#bigText h1').text("Mr. Matti Rintamaki");
+        console.log(winner)
+        d3.select('#bigText p').html("M. Matti est né en 1877, en Finlande. "
+                + "Il est mort en 1912, à l'âge de " + winner.age + " ans, dans la nuit du 14 au 15 avril 1912. "
+                + "En dédommagement, sa femme a reçu (seulement) 375£.");
+        d3.select('#titre-desc').html('Le malheureux élu');
+        d3.select('#p-desc').html("Le passager possédant le plus de chiffres 'portes-malheurs'.")
+        step6b();
+    } else if (getTotalScroll() >= stepGap*11 && getTotalScroll() < stepGap*12) {
+        console.log('STEP 7');
+        d3.select('#div-description').classed('hidden', true);
+        step7();
     }
 }
 
@@ -569,6 +597,57 @@ function step6b() {
                     return d.cy
                 }else 
                     return height /4;
+            }
+            
+        })
+}
+
+// Step6b: Show only the passenger who's dead with the 3rd class.
+function step7() {
+    let indexFirstClass = 0;
+    let indexSecondClass = 0;
+    let indexThirdClass = 0;
+    let position;
+
+    allCircles.enter()
+        .merge(allCircles)
+        .transition(d3.transition()
+            .duration(1500)
+            .ease(d3.easeLinear))
+            .attr('opacity', 0.0)
+        .attr('r', function (d, i) {
+            if (d == winner) {
+                return 30;
+            }else {
+                return 5;
+            }
+        })
+        .attr('cx', (d, i) => {
+            if (d.pclass === 1) {
+                position = -500
+                indexFirstClass++;
+            } else if (d.pclass === 2) {
+                position = -500
+                indexSecondClass++;
+            } else {
+                if (d != winner) {
+                    position = width + 500;
+                }else 
+                    position = width/2;
+                // position = ((indexThirdClass % 16) * 20 + (((width - (49 * 20))) / 2)) + 640 + 40
+                indexThirdClass++;
+            }
+            return position;
+        })
+        .attr('cy', function (d, i) {
+            if (d.survived === 1) {
+                return -500;
+            } else {
+                // keep same cy
+                if (d != winner) {
+                    return d.cy
+                }else 
+                    return height + 100;
             }
             
         })

@@ -131,7 +131,6 @@ export function getTicketWithMostOccurences(biggestNumbers) {
     });
     return winner;
 }
-
 // console.log("nbOccurence", deadPassengers);
 // console.log("Winner: ", getTicketWithMostOccurences(getSixBiggestNumber(nbOccurences)));
 

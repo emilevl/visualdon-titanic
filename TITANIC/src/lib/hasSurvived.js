@@ -1,14 +1,14 @@
 import * as d3 from 'd3';
 import titanic from '../../data/titanic.csv';
-
 import { getTotalScroll, setTotalScroll, stepGap } from '../index.js';
-import { step5 } from './luckyNumbers.js';
+import { step5, getTicketWithMostOccurences, getSixBiggestNumber, nbOccurences } from './luckyNumbers.js';
 setTotalScroll(20000);
 
 d3.select("body")
     .append("div")
     .attr('id', 'graph')
 
+const winner = getTicketWithMostOccurences(getSixBiggestNumber(nbOccurences));
 let margin = { top: 10, right: 20, bottom: 30, left: 50 },
     width = window.innerWidth,
     height = window.innerHeight;
@@ -136,7 +136,8 @@ export function animate() {
 
     // document.getElementById('box').style.background  = "linear-gradient(180deg, rgba(0, 81, 181, 1) 0%, rgba(0, 40, 175, 1) 50%, rgba(0, 0, 100, 1) 100%) no-repeat;";
     // if (getTotalScroll() > 0) {
-    //     document.getElementById('box').style.background  = "linear-gradient(180deg, rgba(0, 81, " + (181+ getTotalScroll/1000) + ", 1) 0%, rgba(0, 40, " + (175 + getTotalScroll/1000) + ", 1) 50%, rgba(0, 0, " + (100+ getTotalScroll/1000) + ", 1) 100%) no-repeat;";
+    //     console.log(document.getElementById('box').style.backgroundImage);
+    //     document.getElementById('box').style.backgroundImage  = "linear-gradient(180deg, rgba(0, " + (81 - getTotalScroll/stepGap) + ", " + (181 - getTotalScroll/stepGap) + ", 1) 0%, rgba(0, 40, " + (175 + getTotalScroll/stepGap) + ", 1) 50%, rgba(0, 0, " + (100+ getTotalScroll/stepGap) + ", 1) 100%) no-repeat;";
     // }
     if (getTotalScroll() < stepGap) {
         console.log('transparent');
@@ -155,7 +156,7 @@ export function animate() {
     } else if (getTotalScroll() >= stepGap*3 && getTotalScroll() < stepGap*4) {
         console.log('STEP 3a');
         d3.select('#titre-desc').html('Priorité aux femmes et aux enfants… mais surtout aux riches !');
-        d3.select('#p-desc').html('Parmis les morts, la tendance est claire : <br>Voici la répartition des premières (gauche), deuxièmes (milieu) et troisièmes (droite) classes.<br>')
+        d3.select('#p-desc').html('Parmis les morts, la tendance est claire : <br>Voici la répartition des premières (gauche), deuxièmes (milieu) et troisièmes (droite) classes, proportionnellement.<br>')
         step3a();
     } else if (getTotalScroll() >= stepGap*4 && getTotalScroll() < stepGap*5) {
         console.log('STEP 3b');
@@ -175,7 +176,7 @@ export function animate() {
         d3.select('#bigText h1').text('Et si tout était écrit ?');
         d3.select('#titre-desc').html('Et si tout était écrit ?');
         d3.select('#p-desc').html("Chacun des passagers a embarqué sur le titanic grâce à un billet. Ce dernier contient une suite de sept caractères alphanumériques.")
-        step4();
+        toggleSvg(false);
     } else if (getTotalScroll() >= stepGap*7 && getTotalScroll() < stepGap*8) {
         console.log('STEP 5');
         d3.select('#titre-desc').html('Caractères porte malheur');
@@ -184,7 +185,19 @@ export function animate() {
             // d3.select('#cloud').attr('class', 'visible');
             d3.select('#cloud').classed('hidden', false);
         }
+        toggleSvg(false);
         step5();
+    } else if (getTotalScroll() >= stepGap*8 && getTotalScroll() < stepGap*9) {
+        console.log('STEP 6a');
+        d3.select('#titre-desc').html('Le malheureux élu');
+        d3.select('#p-desc').html("Le passager possédant le plus de chiffres 'portes-malheurs'.")
+        toggleSvg(true);
+        step6a();
+    } else if (getTotalScroll() >= stepGap*9 && getTotalScroll() < stepGap*10) {
+        console.log('STEP 6b');
+        d3.select('#titre-desc').html('Le malheureux élu');
+        d3.select('#p-desc').html("Le passager possédant le plus de chiffres 'portes-malheurs'.")
+        step6b();
     }
 }
 
@@ -198,6 +211,25 @@ let allCircles = svg1.selectAll('circle')
     .data(titanic)
 let nbDead = 0;
 let nbAlive = 0;
+
+function toggleSvg(show) {
+    if (show) {
+        allCircles.enter()
+        .merge(allCircles)
+        .transition(d3.transition()
+            .duration(500)
+            .ease(d3.easeLinear))
+        .attr('opacity', 1)
+    }else {
+        allCircles.enter()
+        .merge(allCircles)
+        .transition(d3.transition()
+            .duration(500)
+            .ease(d3.easeLinear))
+        .attr('opacity', 0)
+    }
+    
+}
 
 // Step 0
 function step0() {
@@ -427,14 +459,119 @@ function step3c() {
         })
 }
 
-// Step4: Hide all passengers (circles)
-function step4() {
+// Step6a: Show just the passengers who's dead on 3rd class.
+function step6a() {
+    let indexFirstClass = 0;
+    let indexSecondClass = 0;
+    let indexThirdClass = 0;
+    let position;
+
     allCircles.enter()
         .merge(allCircles)
         .transition(d3.transition()
             .duration(500)
             .ease(d3.easeLinear))
-        .attr('opacity', 0)
+            .attr('opacity', 1.0)
+        .attr('fill', function (d) {
+            // console.log(d.survived);
+            if (d.survived !== 1) {
+                if (d.pclass === 1) {
+                    return '#587fcc';
+                } else if (d.pclass === 2) {
+                    return '#99A2D0'
+                } else {
+                    return 'white';
+                }
+            } else {
+                return 'white';
+            }
+        })
+        .attr('cx', (d, i) => {
+            // 16
+            // console.log();
+            if (d.pclass === 1) {
+                position = -500
+                indexFirstClass++;
+            } else if (d.pclass === 2) {
+                position = -500
+                indexSecondClass++;
+            } else {
+                position = ((indexThirdClass % 16) * 20 + (((width - (49 * 20))) / 2)) + 640 + 40
+                indexThirdClass++;
+            }
+            return position;
+        })
+        .attr('cy', function (d, i) {
+            // sort with survived first
+            // return titanicSurvivedSort[i].cx
+            if (d.survived === 1) {
+                return -500;
+            } else {
+                // keep same cy
+                return d.cy;
+            }
+        })
+        .attr('r', 5)
+}
+
+// Step6b: Show only the passenger who's dead with the 3rd class.
+function step6b() {
+    let indexFirstClass = 0;
+    let indexSecondClass = 0;
+    let indexThirdClass = 0;
+    let position;
+
+    allCircles.enter()
+        .merge(allCircles)
+        .transition(d3.transition()
+            .duration(700)
+            .ease(d3.easeCubicIn))
+            .attr('opacity', 1.0)
+        // .attr('fill', function (d) {
+        //     // console.log(d.survived);
+        //     if (d == winner) {
+        //         console.log("THE WINNER", d);
+        //         return 'white'
+        //     }else {
+        //         return 'transparent';
+        //     }
+        // })
+        .attr('r', function (d, i) {
+            if (d == winner) {
+                return 30;
+            }else {
+                return 5;
+            }
+        })
+        .attr('cx', (d, i) => {
+            if (d.pclass === 1) {
+                position = -500
+                indexFirstClass++;
+            } else if (d.pclass === 2) {
+                position = -500
+                indexSecondClass++;
+            } else {
+                if (d != winner) {
+                    position = width + 500;
+                }else 
+                    position = width/2;
+                // position = ((indexThirdClass % 16) * 20 + (((width - (49 * 20))) / 2)) + 640 + 40
+                indexThirdClass++;
+            }
+            return position;
+        })
+        .attr('cy', function (d, i) {
+            if (d.survived === 1) {
+                return -500;
+            } else {
+                // keep same cy
+                if (d != winner) {
+                    return d.cy
+                }else 
+                    return height /4;
+            }
+            
+        })
 }
 
 animate()

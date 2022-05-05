@@ -6,7 +6,7 @@ import titanic from '../../data/titanic.csv';
 // const counts = {};
 const ticketNumbers = new Array()
 const deadPassengers = titanic.filter(elm => !elm.survived)
-const nbOccurences = {}
+export const nbOccurences = {}
 
 // Définition des marges
 
@@ -43,7 +43,7 @@ for (const num of ticketNumbers) {
     nbOccurences[num] = nbOccurences[num] ? nbOccurences[num] + 1 : 1;
 }
 
-function getSixBiggestNumber(data) {
+export function getSixBiggestNumber(data) {
     const sorted = Object.keys(data).sort((a, b) => data[b] - data[a]);
     return sorted.slice(0, 6);
 }
@@ -88,7 +88,7 @@ layout.start();
 // ____________________ FUNCTIONS __________________________________
 
 // function get the ticket with the most occurences of sixBiggestNumber
-function getTicketWithMostOccurences(biggestNumbers) { 
+export function getTicketWithMostOccurences(biggestNumbers) { 
     let winner =  [];
     let winnerNb = 0;
     deadPassengers.forEach(passenger => {
@@ -133,10 +133,10 @@ function getTicketWithMostOccurences(biggestNumbers) {
 }
 
 // console.log("nbOccurence", deadPassengers);
-console.log("Winner: ", getTicketWithMostOccurences(getSixBiggestNumber(nbOccurences)));
+// console.log("Winner: ", getTicketWithMostOccurences(getSixBiggestNumber(nbOccurences)));
 
 
-function getTicketValues(data){
+export function getTicketValues(data){
     data.forEach(elm => {
         const ticket = elm.ticket
         //console.log(ticket)

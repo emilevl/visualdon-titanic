@@ -115,7 +115,7 @@ document.addEventListener("keydown", function (e) {
 
   // If the key is the up arrow or the left arrow
   if (e.keyCode == 38 || e.keyCode == 37) {
-    console.log("UP");
+    // console.log("UP");
     totalScroll -= stepGap;
     animate();
     if (totalScroll < 0) {
@@ -124,7 +124,7 @@ document.addEventListener("keydown", function (e) {
       toggleScroll();
     }
   } else if (e.keyCode === 40 || e.keyCode === 39) {
-    console.log("DOWN");
+    // console.log("DOWN");
     totalScroll += stepGap;
     animate();
     if (totalScroll < 0) {

@@ -91,6 +91,32 @@ body {
   transition: visibility 0s, opacity 0.5s linear;
 }
 
+#topButton {
+  z-index: 99;
+  position:absolute;
+  top: 40%;
+  left: 37%;
+  color: white;
+  font-family: FreeMono, monospace;
+  padding: 0.7em 1.7em;
+  font-size: 18px;
+  border-radius: 0.5em;
+  background: transparent;
+  border: 1px solid white;
+  transition: all .3s;
+  box-shadow: 6px 6px 12px rgb(20, 0, 200),
+              -6px -6px 12px #587FCC;
+}
+
+#topButton:hover {
+  border: 2px solid white;
+}
+
+#topButton:active {
+  box-shadow: 4px 4px 12px rgb(20, 0, 200),
+  -4px -4px 12px #587FCC;
+}
+
 .hidden {
   visibility:hidden;
   opacity: 0;

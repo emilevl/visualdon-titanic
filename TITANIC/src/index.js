@@ -5,6 +5,7 @@ import './lib/waves.js';
 import titanic from '../data/titanic.csv';
 import '../src/index.css';
 import { animate } from './lib/hasSurvived.js';
+import { topFunction } from './lib/hasSurvived.js';
 // const body = d3.select("body");
 // const margin = ({
 //     top: 30,
@@ -12,6 +13,10 @@ import { animate } from './lib/hasSurvived.js';
 //     bottom: 30,
 //     left: 40,
 //   });
+
+setTimeout(function(){
+  d3.select('#boat').attr('class', '')
+ }, 500);
 
 // const maxWidth = window.innerWidth;
 // console.log(maxHeight);
@@ -76,7 +81,7 @@ function handleIntersect(entries, observer) {
   });
 }
 
-function toggleScroll() {
+export function toggleScroll() {
   if (!scroll) {
     // To get the scroll position of current webpage
     // add class "stop-scroll" to box

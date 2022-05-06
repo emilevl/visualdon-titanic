@@ -1,6 +1,6 @@
 import * as d3 from 'd3';
 import titanic from '../../data/titanic.csv';
-import { getTotalScroll, setTotalScroll, stepGap } from '../index.js';
+import { toggleScroll, getTotalScroll, setTotalScroll, stepGap } from '../index.js';
 import { step5, getTicketWithMostOccurences, getSixBiggestNumber, nbOccurences } from './luckyNumbers.js';
 setTotalScroll(20000);
 
@@ -48,6 +48,8 @@ let svg1 = d3.select('#step1')
 let brokenBoat = d3.select('#broken-boat');
 let brokenRight = d3.select('#broken-right');
 let brokenLeft = d3.select('#broken-left');
+let topButton = d3.select('#topButton');
+let body = d3.select('body');
 
 // set the cx and cy for each passenger
 titanic.forEach((passenger, i) => {
@@ -151,32 +153,32 @@ export function animate() {
         d3.select('#titre-desc').html('Le grand départ');
         d3.select('#p-desc').html('Entre le 10 et le 12 avril 1912, 1310 personnes embarquent sur le Titanic à Southampton, Cherbourg puis Queenstown. Le bâteau quitte le Vieux-Continent direction les Amériques et, pour la plupart de ces passagers, le Rêve américain.')
         step0();
-        document.getElementById('box').style.background 
-    } else if (getTotalScroll() >= stepGap && getTotalScroll() < stepGap*2) {
+        document.getElementById('box').style.background
+    } else if (getTotalScroll() >= stepGap && getTotalScroll() < stepGap * 2) {
         console.log('STEP 1');
         step1();
-    } else if (getTotalScroll() >= stepGap*2 && getTotalScroll() < stepGap*3) {
+    } else if (getTotalScroll() >= stepGap * 2 && getTotalScroll() < stepGap * 3) {
         console.log('STEP 2');
         d3.select('#titre-desc').html('Une nuit en enfer');
         d3.select('#p-desc').html('Dans la nuit du 14 au 15 avril 1912, le Titanic heurte un iceberg et coule en à peine quelques heures. <br>Parmis tous les passagers, seulement ' + compteurPassengersSurvived + ' ont survécu. Les autres - <strong>que voici</strong> - meurent et ne reverront jamais la surface. Bousculades, morts de froid ou de noyade, tout le monde peut être touché.')
         step2();
-    } else if (getTotalScroll() >= stepGap*3 && getTotalScroll() < stepGap*4) {
+    } else if (getTotalScroll() >= stepGap * 3 && getTotalScroll() < stepGap * 4) {
         console.log('STEP 3a');
         d3.select('#titre-desc').html('Priorité aux femmes et aux enfants… mais surtout aux riches !');
         d3.select('#p-desc').html('Parmis les morts, la tendance est claire : <br>Voici la répartition des premières (gauche), deuxièmes (milieu) et troisièmes (droite) classes, proportionnellement.<br>')
         step3a();
-    } else if (getTotalScroll() >= stepGap*4 && getTotalScroll() < stepGap*5) {
+    } else if (getTotalScroll() >= stepGap * 4 && getTotalScroll() < stepGap * 5) {
         console.log('STEP 3b');
         d3.select('#p-desc').html("Parmis les morts, la tendance est claire : <br>Voici la répartition des premières, deuxièmes et troisièmes classes.<br>Alors qu'un tiers des premières classes ont trouvé la mort, le taux de décès en deuxième classe est d'environ 50%.")
         step3b();
-    } else if (getTotalScroll() >= stepGap*5 && getTotalScroll() < stepGap*6) {
+    } else if (getTotalScroll() >= stepGap * 5 && getTotalScroll() < stepGap * 6) {
         console.log('STEP 3b');
         d3.select('#p-desc').html("Parmis les morts, la tendance est claire :"
-                    + "<br>Voici la répartition des premières, deuxièmes et troisièmes classes."
-                    + "<br>Alors qu'un tiers des premières classes ont trouvé la mort, le taux de décès en deuxième classe est d'environ 50%."
-                    + "<br>Quant aux troisièmes classes, à peine une personne sur 6 avait une chance de survie.")
+            + "<br>Voici la répartition des premières, deuxièmes et troisièmes classes."
+            + "<br>Alors qu'un tiers des premières classes ont trouvé la mort, le taux de décès en deuxième classe est d'environ 50%."
+            + "<br>Quant aux troisièmes classes, à peine une personne sur 6 avait une chance de survie.")
         step3c();
-    } else if (getTotalScroll() >= stepGap*6 && getTotalScroll() < stepGap*7) {
+    } else if (getTotalScroll() >= stepGap * 6 && getTotalScroll() < stepGap * 7) {
         console.log('STEP 4');
 
         d3.select('#bigText h1').classed('hidden', false);
@@ -184,23 +186,23 @@ export function animate() {
         d3.select('#titre-desc').html('Et si tout était écrit ?');
         d3.select('#p-desc').html("Chacun des passagers a embarqué sur le titanic grâce à un billet. Ce dernier contient une suite de sept caractères alphanumériques.")
         toggleSvg(false);
-    } else if (getTotalScroll() >= stepGap*7 && getTotalScroll() < stepGap*8) {
+    } else if (getTotalScroll() >= stepGap * 7 && getTotalScroll() < stepGap * 8) {
         console.log('STEP 5');
         d3.select('#titre-desc').html('Caractères porte malheur');
-        d3.select('#p-desc').html("Voici les caractères ayant le plus apporté la mort au propriétaire du billet")        
+        d3.select('#p-desc').html("Voici les caractères ayant le plus apporté la mort au propriétaire du billet")
         if (d3.select('#cloud').classed('hidden')) {
             // d3.select('#cloud').attr('class', 'visible');
             d3.select('#cloud').classed('hidden', false);
         }
         toggleSvg(false);
         step5();
-    } else if (getTotalScroll() >= stepGap*8 && getTotalScroll() < stepGap*9) {
+    } else if (getTotalScroll() >= stepGap * 8 && getTotalScroll() < stepGap * 9) {
         console.log('STEP 6a');
         d3.select('#titre-desc').html('Le malheureux élu');
         d3.select('#p-desc').html("Le passager possédant le plus de chiffres 'portes-malheurs'.")
         toggleSvg(true);
         step6a();
-    } else if (getTotalScroll() >= stepGap*9 && getTotalScroll() < stepGap*10) {
+    } else if (getTotalScroll() >= stepGap * 9 && getTotalScroll() < stepGap * 10) {
         console.log('STEP 6b');
         d3.select('#div-description').classed('hidden', true);
         d3.select('#bigText h1').classed('hidden', false);
@@ -208,7 +210,7 @@ export function animate() {
         d3.select('#titre-desc').html('Le malheureux élu');
         d3.select('#p-desc').html("Le passager possédant le plus de chiffres 'portes-malheurs'.")
         step6b();
-    } else if (getTotalScroll() >= stepGap*10 && getTotalScroll() < stepGap*11) {
+    } else if (getTotalScroll() >= stepGap * 10 && getTotalScroll() < stepGap * 11) {
         console.log('STEP 6b');
         d3.select('#div-description').classed('hidden', true);
         d3.select('#bigText h1').classed('hidden', false);
@@ -216,30 +218,29 @@ export function animate() {
         d3.select('#bigText h1').text("Mr. Matti Rintamaki");
         console.log(winner)
         d3.select('#bigText p').html("M. Matti est né en 1877, en Finlande. "
-                + "Il est mort en 1912, à l'âge de " + winner.age + " ans, dans la nuit du 14 au 15 avril 1912. "
-                + "En dédommagement, sa femme a reçu (seulement) 375£.");
+            + "Il est mort en 1912, à l'âge de " + winner.age + " ans, dans la nuit du 14 au 15 avril 1912. "
+            + "En dédommagement, sa femme a reçu (seulement) 375£.");
         d3.select('#titre-desc').html('Le malheureux élu');
         d3.select('#p-desc').html("Le passager possédant le plus de chiffres 'portes-malheurs'.")
         step6b();
-    } else if (getTotalScroll() >= stepGap*11 && getTotalScroll() < stepGap*12) {
+    } else if (getTotalScroll() >= stepGap * 11 && getTotalScroll() < stepGap * 12) {
         console.log('STEP 7');
         d3.select('#div-description').classed('hidden', true);
-        // d3.select('#brokenBoat').attr('display', 'none');
+        d3.select('#div-button').classed('hidden', true);
         step7();
-    } else if (getTotalScroll() >= stepGap*12) {
+    } else if (getTotalScroll() >= stepGap * 12 && getTotalScroll() < stepGap * 13) {
         console.log('STEP 8');
-        // d3.select('#brokenBoat').attr('display', 'block');
         d3.select('#titre-desc').html('')
         d3.select('#p-desc').html('')
-        d3.select('#box')
-        .append('button')
-        .attr('z-index', '0')
-        .attr('type', 'button')
-        .attr('onclick', 'window.location.reload(true);')
-        .attr('style', 'padding: 10%')
+        d3.select('#div-button').classed('hidden', false);
         step8();
     }
 }
+
+topButton.on("click", function () {
+    window.scrollTo(0, 0)
+    window.location.reload();
+})
 
 // // Mettre en pause
 // function stop() {
@@ -255,20 +256,20 @@ let nbAlive = 0;
 function toggleSvg(show) {
     if (show) {
         allCircles.enter()
-        .merge(allCircles)
-        .transition(d3.transition()
-            .duration(500)
-            .ease(d3.easeLinear))
-        .attr('opacity', 1)
-    }else {
+            .merge(allCircles)
+            .transition(d3.transition()
+                .duration(500)
+                .ease(d3.easeLinear))
+            .attr('opacity', 1)
+    } else {
         allCircles.enter()
-        .merge(allCircles)
-        .transition(d3.transition()
-            .duration(500)
-            .ease(d3.easeLinear))
-        .attr('opacity', 0)
+            .merge(allCircles)
+            .transition(d3.transition()
+                .duration(500)
+                .ease(d3.easeLinear))
+            .attr('opacity', 0)
     }
-    
+
 }
 
 // Step 0
@@ -457,7 +458,7 @@ function step3c() {
         .transition(d3.transition()
             .duration(500)
             .ease(d3.easeLinear))
-            .attr('opacity', 1.0)
+        .attr('opacity', 1.0)
         .attr('fill', function (d) {
             // console.log(d.survived);
             if (d.survived !== 1) {
@@ -511,7 +512,7 @@ function step6a() {
         .transition(d3.transition()
             .duration(500)
             .ease(d3.easeLinear))
-            .attr('opacity', 1.0)
+        .attr('opacity', 1.0)
         .attr('fill', function (d) {
             // console.log(d.survived);
             if (d.survived !== 1) {
@@ -566,7 +567,7 @@ function step6b() {
         .transition(d3.transition()
             .duration(700)
             .ease(d3.easeCubicIn))
-            .attr('opacity', 1.0)
+        .attr('opacity', 1.0)
         // .attr('fill', function (d) {
         //     // console.log(d.survived);
         //     if (d == winner) {
@@ -579,7 +580,7 @@ function step6b() {
         .attr('r', function (d, i) {
             if (d == winner) {
                 return 30;
-            }else {
+            } else {
                 return 5;
             }
         })
@@ -593,8 +594,8 @@ function step6b() {
             } else {
                 if (d != winner) {
                     position = width + 500;
-                }else 
-                    position = width/2;
+                } else
+                    position = width / 2;
                 // position = ((indexThirdClass % 16) * 20 + (((width - (49 * 20))) / 2)) + 640 + 40
                 indexThirdClass++;
             }
@@ -607,10 +608,10 @@ function step6b() {
                 // keep same cy
                 if (d != winner) {
                     return d.cy
-                }else 
-                    return height /4;
+                } else
+                    return height / 4;
             }
-            
+
         })
 }
 
@@ -626,11 +627,11 @@ function step7() {
         .transition(d3.transition()
             .duration(1500)
             .ease(d3.easeLinear))
-            .attr('opacity', 0.0)
+        .attr('opacity', 0.0)
         .attr('r', function (d, i) {
             if (d == winner) {
                 return 30;
-            }else {
+            } else {
                 return 5;
             }
         })
@@ -644,8 +645,8 @@ function step7() {
             } else {
                 if (d != winner) {
                     position = width + 500;
-                }else 
-                    position = width/2;
+                } else
+                    position = width / 2;
                 // position = ((indexThirdClass % 16) * 20 + (((width - (49 * 20))) / 2)) + 640 + 40
                 indexThirdClass++;
             }
@@ -658,18 +659,16 @@ function step7() {
                 // keep same cy
                 if (d != winner) {
                     return d.cy
-                }else 
+                } else
                     return height + 100;
             }
-            
+
         })
 }
 
 // Le Titanic coule au fond de l'océan
 function step8() {
-    // let brokenBoat;
-    // let brokenRight;
-    // let brokenLeft;
+    //
 }
 
 animate()

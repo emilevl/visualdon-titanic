@@ -109,8 +109,8 @@ body {
   background: transparent;
   border: 1px solid white;
   transition: all .3s;
-  box-shadow: 6px 6px 12px rgb(20, 0, 200),
-              -6px -6px 12px #587FCC;
+  /* box-shadow: 6px 6px 12px rgb(20, 0, 200),
+              -6px -6px 12px #587FCC; */
 }
 
 #topButton:hover {
@@ -118,8 +118,9 @@ body {
 }
 
 #topButton:active {
-  box-shadow: 4px 4px 12px rgb(20, 0, 200),
-  -4px -4px 12px #587FCC;
+  /* box-shadow: 4px 4px 12px rgb(20, 0, 200),
+  -4px -4px 12px #587FCC; */
+  border: 4px solid white;
 }
 
 .hidden {

@@ -124,15 +124,17 @@ titanic.forEach(passenger => {
     }
 });
 
-console.log(firstClassTotal + ' firstClass');
-console.log('firstClass : ' + firstClassAlive + ' ont survécu et ' + firstClassDead + ' sont décédés');
-console.log(secondClassTotal + ' secondClass');
-console.log('secondClass : ' + secondClassAlive + ' ont survécu et ' + secondClassDead + ' sont décédés');
-console.log(thirdClassTotal + ' thirdClass');
-console.log('thirdClass : ' + thirdClassAlive + ' ont survécu et ' + thirdClassDead + ' sont décédés');
-console.log(undefinedClass + ' undefinedClass');
+// TESTS DE VERIFICATION DES CHIFFRES
+// console.log(firstClassTotal + ' firstClass');
+// console.log('firstClass : ' + firstClassAlive + ' ont survécu et ' + firstClassDead + ' sont décédés');
+// console.log(secondClassTotal + ' secondClass');
+// console.log('secondClass : ' + secondClassAlive + ' ont survécu et ' + secondClassDead + ' sont décédés');
+// console.log(thirdClassTotal + ' thirdClass');
+// console.log('thirdClass : ' + thirdClassAlive + ' ont survécu et ' + thirdClassDead + ' sont décédés');
+// console.log(undefinedClass + ' undefinedClass');
 
 export function animate() {
+    // console.log("total scroll", getTotalScroll());
 
     // Hide the cloud if needed
     if (!d3.select('#cloud').classed('hidden')) {
@@ -143,15 +145,19 @@ export function animate() {
     d3.select('#div-description').classed('hidden', false);
 
 
+    // Trying to change the background gradient.
     // document.getElementById('box').style.background  = "linear-gradient(180deg, rgba(0, 81, 181, 1) 0%, rgba(0, 40, 175, 1) 50%, rgba(0, 0, 100, 1) 100%) no-repeat;";
+    
+    // CONDITIONS WITH ALL STEPS, FROM ALL PASSENGERS TO THE LAST UNLUCKY ONE.
     if (getTotalScroll() > stepGap && scroll == false) {
-        // console.log("total scroll", getTotalScroll());
         document.getElementById('box').style.background  = "hsl(224.57,100%, " + (34 - 1.2* getTotalScroll() / stepGap)+ "%)";
         // document.getElementById('box').style.backgroundColor  = "red";
         // document.getElementById('box').style.background  = "red";
     }else {
         document.getElementById('box').style.background  = "hsl(213.15,100%,35.49%)";
     }
+
+    //  First step: the story
     if (getTotalScroll() < stepGap) {
         console.log('transparent');
         d3.select('#titre-desc').html('Le grand départ');
@@ -159,31 +165,31 @@ export function animate() {
         step0();
         document.getElementById('box').style.background
     } else if (getTotalScroll() >= stepGap && getTotalScroll() < stepGap * 2) {
-        console.log('STEP 1');
+        console.log('STEP 1: The Titanic');
         step1();
     } else if (getTotalScroll() >= stepGap * 2 && getTotalScroll() < stepGap * 3) {
-        console.log('STEP 2');
+        console.log('STEP 2: The death of the Titanic');
         d3.select('#titre-desc').html('Une nuit en enfer');
         d3.select('#p-desc').html('Dans la nuit du 14 au 15 avril 1912, le Titanic heurte un iceberg et coule en à peine quelques heures. <br>Parmis tous les passagers, seulement ' + compteurPassengersSurvived + ' ont survécu. Les autres - <strong>que voici</strong> - meurent et ne reverront jamais la surface. Bousculades, morts de froid ou de noyade, tout le monde peut être touché.')
         step2();
     } else if (getTotalScroll() >= stepGap * 3 && getTotalScroll() < stepGap * 4) {
-        console.log('STEP 3a');
+        console.log('STEP 3a: Class separation');
         d3.select('#titre-desc').html('Priorité aux femmes et aux enfants… mais surtout aux riches !');
         d3.select('#p-desc').html('Parmis les morts, la tendance est claire : <br>Voici la répartition des premières (gauche), deuxièmes (milieu) et troisièmes (droite) classes, proportionnellement.<br>')
         step3a();
     } else if (getTotalScroll() >= stepGap * 4 && getTotalScroll() < stepGap * 5) {
-        console.log('STEP 3b');
+        console.log('STEP 3b: Removing first class');
         d3.select('#p-desc').html("Parmis les morts, la tendance est claire : <br>Voici la répartition des premières, deuxièmes et troisièmes classes.<br>Alors qu'un tiers des premières classes ont trouvé la mort, le taux de décès en deuxième classe est d'environ 50%.")
         step3b();
     } else if (getTotalScroll() >= stepGap * 5 && getTotalScroll() < stepGap * 6) {
-        console.log('STEP 3b');
+        console.log('STEP 3b: Removing 2nd class');
         d3.select('#p-desc').html("Parmis les morts, la tendance est claire :"
             + "<br>Voici la répartition des premières, deuxièmes et troisièmes classes."
             + "<br>Alors qu'un tiers des premières classes ont trouvé la mort, le taux de décès en deuxième classe est d'environ 50%."
             + "<br>Quant aux troisièmes classes, à peine une personne sur 6 avait une chance de survie.")
         step3c();
     } else if (getTotalScroll() >= stepGap * 6 && getTotalScroll() < stepGap * 7) {
-        console.log('STEP 4');
+        console.log('STEP 4: Text: Et si tout était écrit?');
 
         d3.select('#bigText h1').classed('hidden', false);
         d3.select('#bigText h1').text('Et si tout était écrit ?');
@@ -191,7 +197,7 @@ export function animate() {
         d3.select('#p-desc').html("Chacun des passagers a embarqué sur le titanic grâce à un billet. Ce dernier contient une suite de sept caractères alphanumériques.")
         toggleSvg(false);
     } else if (getTotalScroll() >= stepGap * 7 && getTotalScroll() < stepGap * 8) {
-        console.log('STEP 5');
+        console.log('STEP 5: Unlucky characters');
         d3.select('#titre-desc').html('Caractères porte malheur');
         d3.select('#p-desc').html("Voici les caractères ayant le plus apporté la mort au propriétaire du billet")
         if (d3.select('#cloud').classed('hidden')) {
@@ -201,13 +207,13 @@ export function animate() {
         toggleSvg(false);
         step5();
     } else if (getTotalScroll() >= stepGap * 8 && getTotalScroll() < stepGap * 9) {
-        console.log('STEP 6a');
+        console.log('STEP 6a: The unlucky one');
         d3.select('#titre-desc').html('Le malheureux élu');
         d3.select('#p-desc').html("Le passager possédant le plus de chiffres 'portes-malheurs'.")
         toggleSvg(true);
         step6a();
     } else if (getTotalScroll() >= stepGap * 9 && getTotalScroll() < stepGap * 10) {
-        console.log('STEP 6b');
+        console.log('STEP 6b: Title: The unlucky one');
         d3.select('#div-description').classed('hidden', true);
         d3.select('#bigText h1').classed('hidden', false);
         d3.select('#bigText h1').text("Pour l'un d'eux, mourir sur le titanic était une évidence...");
@@ -215,7 +221,7 @@ export function animate() {
         d3.select('#p-desc').html("Le passager possédant le plus de chiffres 'portes-malheurs'.")
         step6b();
     } else if (getTotalScroll() >= stepGap * 10 && getTotalScroll() < stepGap * 11) {
-        console.log('STEP 6b');
+        console.log('STEP 6b: Describing the unlucky one');
         d3.select('#div-description').classed('hidden', true);
         d3.select('#bigText h1').classed('hidden', false);
         d3.select('#bigText p').classed('hidden', false);

@@ -1,18 +1,11 @@
 import * as d3 from 'd3';
 import './lib/luckyNumbers.js';
-import './lib/hasSurvived.js';
+import './lib/steps.js';
 import './lib/waves.js';
 import titanic from '../data/titanic.csv';
 import '../src/index.css';
-import { animate } from './lib/hasSurvived.js';
-import { topFunction } from './lib/hasSurvived.js';
-// const body = d3.select("body");
-// const margin = ({
-//     top: 30,
-//     right: 10,
-//     bottom: 30,
-//     left: 40,
-//   });
+import { animate } from './lib/steps.js';
+import { topFunction } from './lib/steps.js';
 
 setTimeout(function(){
   d3.select('#boat').attr('class', '')
@@ -24,9 +17,9 @@ export let scroll = true;
 const maxHeight = window.innerHeight;
 
 // console.log(maxHeight)
-let numSteps = 10.0;
+let numSteps = 20.0;
 let totalScroll = 100000;
-export let stepGap = 500;
+export let stepGap = 600;
 let alreadyPositioned = false;
 
 let boxElement;
@@ -73,11 +66,11 @@ function handleIntersect(entries, observer) {
   entries.forEach(function (entry) {
     prevRatio = entry.intersectionRatio;
 
-    if (prevRatio >= 0.9) {
+    if (prevRatio >= 0.95) {
       totalScroll = 0;
       scroll = false;
       toggleScroll();
-    } 
+    }
   });
 }
 
@@ -90,9 +83,10 @@ export function toggleScroll() {
   } else {
     document.querySelector('body').classList.remove('stop-scroll');
     boxElement.classList.remove('full-screen');
-    if (totalScroll > -150 && !alreadyPositioned) {
-      window.scrollTo(0, maxHeight * 0.88)
+    if (totalScroll < 0 && !alreadyPositioned) {
+      window.scrollTo(0, maxHeight)
       alreadyPositioned = true;
+      totalScroll = 100000;
     }
   }
 }
@@ -118,24 +112,26 @@ document.addEventListener("wheel", function (e) {
 // Add event listener on arrow keys
 document.addEventListener("keydown", function (e) {
 
-  // If the key is the up arrow or the left arrow
-  if (e.keyCode == 38 || e.keyCode == 37) {
-    // console.log("UP");
-    totalScroll -= stepGap;
-    animate();
-    if (totalScroll < 0) {
-      scroll = true;
-      alreadyPositioned = false;
-      toggleScroll();
-    }
-  } else if (e.keyCode === 40 || e.keyCode === 39) {
-    // console.log("DOWN");
-    totalScroll += stepGap;
-    animate();
-    if (totalScroll < 0) {
-      scroll = true;
-      alreadyPositioned = false;
-      toggleScroll();
+  if (!scroll) {
+    // If the key is the up arrow or the left arrow
+    if (e.keyCode == 38 || e.keyCode == 37) {
+      // console.log("UP");
+      totalScroll -= stepGap;
+      animate();
+      if (totalScroll < 0) {
+        scroll = true;
+        alreadyPositioned = false;
+        toggleScroll();
+      }
+    } else if (e.keyCode === 40 || e.keyCode === 39) {
+      // console.log("DOWN");
+      totalScroll += stepGap;
+      animate();
+      if (totalScroll < 0) {
+        scroll = true;
+        alreadyPositioned = false;
+        toggleScroll();
+      }
     }
   }
 }, true);

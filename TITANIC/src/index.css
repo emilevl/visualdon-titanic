@@ -4,7 +4,6 @@ body::-webkit-scrollbar {
 
 body {
   overflow-y: scroll;
-  /* Add the ability to scroll */
   overflow-x: hidden;
   -ms-overflow-style: none;
   /* IE and Edge */
@@ -49,6 +48,12 @@ body {
   transform-box: fill-box;
   transform-origin: center;
   transform: rotate(2deg);
+}
+
+.iceberg {
+  transform-origin: center;
+  transform: scale(0.4);
+  transform-origin: 20% 60%;
 }
 
 /* SVG full screen*/

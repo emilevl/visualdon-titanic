@@ -20,7 +20,7 @@ setTimeout(function(){
 
 // const maxWidth = window.innerWidth;
 // console.log(maxHeight);
-let scroll = true;
+export let scroll = true;
 const maxHeight = window.innerHeight;
 
 // console.log(maxHeight)

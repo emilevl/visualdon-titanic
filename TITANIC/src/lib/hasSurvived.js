@@ -1,6 +1,6 @@
 import * as d3 from 'd3';
 import titanic from '../../data/titanic.csv';
-import { toggleScroll, getTotalScroll, setTotalScroll, stepGap } from '../index.js';
+import { toggleScroll, getTotalScroll, setTotalScroll, stepGap, scroll } from '../index.js';
 import { step5, getTicketWithMostOccurences, getSixBiggestNumber, nbOccurences } from './luckyNumbers.js';
 setTotalScroll(20000);
 
@@ -142,11 +142,15 @@ export function animate() {
     d3.select('#bigText p').classed('hidden', true);
     d3.select('#div-description').classed('hidden', false);
 
+
     // document.getElementById('box').style.background  = "linear-gradient(180deg, rgba(0, 81, 181, 1) 0%, rgba(0, 40, 175, 1) 50%, rgba(0, 0, 100, 1) 100%) no-repeat;";
-    if (getTotalScroll() > 0 && scroll == false) {
-        console.log(document.getElementById('box').style);
+    if (getTotalScroll() > stepGap && scroll == false) {
+        // console.log("total scroll", getTotalScroll());
+        document.getElementById('box').style.background  = "hsl(224.57,100%, " + (34 - 1.2* getTotalScroll() / stepGap)+ "%)";
         // document.getElementById('box').style.backgroundColor  = "red";
         // document.getElementById('box').style.background  = "red";
+    }else {
+        document.getElementById('box').style.background  = "hsl(213.15,100%,35.49%)";
     }
     if (getTotalScroll() < stepGap) {
         console.log('transparent');

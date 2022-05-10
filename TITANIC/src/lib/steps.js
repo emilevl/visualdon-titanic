@@ -182,15 +182,15 @@ export function animate() {
     } else if (getTotalScroll() >= stepGap * 4 && getTotalScroll() < stepGap * 5) {
         console.log('STEP 3b: Removing first class');
         d3.select('#titre-desc').html('Priorité aux femmes et aux enfants… mais surtout aux riches !');
-        d3.select('#p-desc').html("Parmis les morts, la tendance est claire : <br>Voici la répartition des premières – à gauche, deuxièmes – au centre – et troisièmes – à droite – classes, proportionnellement. <br>Alors qu'un tiers des premières classes ont trouvé la mort, le taux de décès en deuxième classe est d'environ 50%.")
+        d3.select('#p-desc').html("Parmis les morts, la tendance est claire : <br>Voici la répartition des premières – à gauche, deuxièmes – au centre – et troisièmes – à droite – classes, proportionnellement. Alors qu'un tiers des premières classes ont trouvé la mort, le taux de décès en deuxième classe est d'environ 50%.")
         step3b();
     } else if (getTotalScroll() >= stepGap * 5 && getTotalScroll() < stepGap * 6) {
         console.log('STEP 3b: Removing 2nd class');
         d3.select('#titre-desc').html('Priorité aux femmes et aux enfants… mais surtout aux riches !');
         d3.select('#p-desc').html("Parmis les morts, la tendance est claire :"
             + "<br>Voici la répartition des premières – à gauche, deuxièmes – au centre – et troisièmes – à droite – classes, proportionnellement. "
-            + "<br>Alors qu'un tiers des premières classes ont trouvé la mort, le taux de décès en deuxième classe est d'environ 50%."
-            + "<br>Quant aux troisièmes classes, à peine une personne sur 6 avait une chance de survie.")
+            + "Alors qu'un tiers des premières classes ont trouvé la mort, le taux de décès en deuxième classe est d'environ 50%."
+            + " Quant aux troisièmes classes, à peine une personne sur 6 avait une chance de survie.")
         step3c();
     } else if (getTotalScroll() >= stepGap * 6 && getTotalScroll() < stepGap * 7) {
         console.log('STEP 4: Text: Et si tout était écrit?');

@@ -161,11 +161,13 @@ export function animate() {
     if (getTotalScroll() < stepGap) {
         console.log('transparent');
         d3.select('#titre-desc').html('Le grand départ');
-        d3.select('#p-desc').html('Entre le 10 et le 12 avril 1912, 1310 personnes embarquent sur le Titanic à Southampton, Cherbourg puis Queenstown. Le bâteau quitte le Vieux-Continent direction les Amériques et, pour la plupart de ces passagers, le Rêve américain.')
+        d3.select('#p-desc').html("Entre le 10 et le 12 avril 1912, 1310 passagers embarquent sur le Titanic à Southampton, Cherbourg puis Queenstown. Le bâteau quitte le Vieux-Continent direction les Amériques et, pour la plupart d'entre eux, le Rêve américain.")
         step0();
         document.getElementById('box').style.background
     } else if (getTotalScroll() >= stepGap && getTotalScroll() < stepGap * 2) {
         console.log('STEP 1: The Titanic');
+        d3.select('#titre-desc').html('Le grand départ');
+        d3.select('#p-desc').html("Entre le 10 et le 12 avril 1912, 1310 passagers embarquent sur le Titanic à Southampton, Cherbourg puis Queenstown. Le bâteau quitte le Vieux-Continent direction les Amériques et, pour la plupart d'entre eux, le Rêve américain.")
         step1();
     } else if (getTotalScroll() >= stepGap * 2 && getTotalScroll() < stepGap * 3) {
         console.log('STEP 2: The death of the Titanic');
@@ -175,16 +177,18 @@ export function animate() {
     } else if (getTotalScroll() >= stepGap * 3 && getTotalScroll() < stepGap * 4) {
         console.log('STEP 3a: Class separation');
         d3.select('#titre-desc').html('Priorité aux femmes et aux enfants… mais surtout aux riches !');
-        d3.select('#p-desc').html('Parmis les morts, la tendance est claire : <br>Voici la répartition des premières (gauche), deuxièmes (milieu) et troisièmes (droite) classes, proportionnellement.<br>')
+        d3.select('#p-desc').html('Parmis les morts, la tendance est claire : <br>Voici la répartition des premières – à gauche, deuxièmes – au centre – et troisièmes – à droite – classes, proportionnellement. <br>')
         step3a();
     } else if (getTotalScroll() >= stepGap * 4 && getTotalScroll() < stepGap * 5) {
         console.log('STEP 3b: Removing first class');
-        d3.select('#p-desc').html("Parmis les morts, la tendance est claire : <br>Voici la répartition des premières, deuxièmes et troisièmes classes.<br>Alors qu'un tiers des premières classes ont trouvé la mort, le taux de décès en deuxième classe est d'environ 50%.")
+        d3.select('#titre-desc').html('Priorité aux femmes et aux enfants… mais surtout aux riches !');
+        d3.select('#p-desc').html("Parmis les morts, la tendance est claire : <br>Voici la répartition des premières – à gauche, deuxièmes – au centre – et troisièmes – à droite – classes, proportionnellement. <br>Alors qu'un tiers des premières classes ont trouvé la mort, le taux de décès en deuxième classe est d'environ 50%.")
         step3b();
     } else if (getTotalScroll() >= stepGap * 5 && getTotalScroll() < stepGap * 6) {
         console.log('STEP 3b: Removing 2nd class');
+        d3.select('#titre-desc').html('Priorité aux femmes et aux enfants… mais surtout aux riches !');
         d3.select('#p-desc').html("Parmis les morts, la tendance est claire :"
-            + "<br>Voici la répartition des premières, deuxièmes et troisièmes classes."
+            + "<br>Voici la répartition des premières – à gauche, deuxièmes – au centre – et troisièmes – à droite – classes, proportionnellement. "
             + "<br>Alors qu'un tiers des premières classes ont trouvé la mort, le taux de décès en deuxième classe est d'environ 50%."
             + "<br>Quant aux troisièmes classes, à peine une personne sur 6 avait une chance de survie.")
         step3c();
@@ -193,12 +197,12 @@ export function animate() {
 
         d3.select('#bigText h1').classed('hidden', false);
         d3.select('#bigText h1').text('Et si tout était écrit ?');
-        d3.select('#titre-desc').html('Et si tout était écrit ?');
+        d3.select('#titre-desc').html('');
         d3.select('#p-desc').html("Chacun des passagers a embarqué sur le titanic grâce à un billet. Ce dernier contient une suite de sept caractères alphanumériques.")
         toggleSvg(false);
     } else if (getTotalScroll() >= stepGap * 7 && getTotalScroll() < stepGap * 8) {
         console.log('STEP 5: Unlucky characters');
-        d3.select('#titre-desc').html('Caractères porte malheur');
+        d3.select('#titre-desc').html('Caractères porte-malheurs');
         d3.select('#p-desc').html("Voici les caractères ayant le plus apporté la mort au propriétaire du billet")
         if (d3.select('#cloud').classed('hidden')) {
             // d3.select('#cloud').attr('class', 'visible');
@@ -228,8 +232,13 @@ export function animate() {
         d3.select('#bigText h1').text("Mr. Matti Rintamaki");
         console.log(winner)
         d3.select('#bigText p').html("M. Matti est né en 1877, en Finlande. "
-            + "Il est mort en 1912, à l'âge de " + winner.age + " ans, dans la nuit du 14 au 15 avril 1912. "
-            + "En dédommagement, sa femme a reçu (seulement) 375£.");
+            + "Il est mort à l'âge de " + winner.age + " ans, dans la nuit du 14 au 15 avril 1912, suite au nauvrage du Titanic. "
+            + "Matti laisse derrière lui sa femme, Maria Sofia, née Mäki, et ses 9 enfants. Son corps n'a jamais été retrouvé."
+            + "<br>"
+            + "<br>Sa femme intente un procès civil pour homicide involontaire de la compagnie du Titanic. "
+            + "En dédommagement, elle a reçu 375£ ce qui représentait environs 6 ans de salaire de son époux. À titre de comparaison, cela représenterait environs 55'000 francs suisses aujourd'hui. "
+            + "<br>"
+            + "<br>Il avait le billet numéro 3101273");
         d3.select('#titre-desc').html('Le malheureux élu');
         d3.select('#p-desc').html("Le passager possédant le plus de chiffres 'portes-malheurs'.")
         step6b();

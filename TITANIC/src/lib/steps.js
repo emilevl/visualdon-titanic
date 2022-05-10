@@ -147,14 +147,14 @@ export function animate() {
 
     // Trying to change the background gradient.
     // document.getElementById('box').style.background  = "linear-gradient(180deg, rgba(0, 81, 181, 1) 0%, rgba(0, 40, 175, 1) 50%, rgba(0, 0, 100, 1) 100%) no-repeat;";
-    
+
     // CONDITIONS WITH ALL STEPS, FROM ALL PASSENGERS TO THE LAST UNLUCKY ONE.
     if (getTotalScroll() > stepGap && scroll == false) {
-        document.getElementById('box').style.background  = "hsl(224.57,100%, " + (34 - 1.2* getTotalScroll() / stepGap)+ "%)";
+        document.getElementById('box').style.background = "hsl(224.57,100%, " + (34 - 1.2 * getTotalScroll() / stepGap) + "%)";
         // document.getElementById('box').style.backgroundColor  = "red";
         // document.getElementById('box').style.background  = "red";
-    }else {
-        document.getElementById('box').style.background  = "hsl(213.15,100%,35.49%)";
+    } else {
+        document.getElementById('box').style.background = "hsl(213.15,100%,35.49%)";
     }
 
     //  First step: the story
@@ -197,7 +197,7 @@ export function animate() {
 
         d3.select('#bigText h1').classed('hidden', false);
         d3.select('#bigText h1').text('Et si tout était écrit ?');
-        d3.select('#titre-desc').html('');
+        d3.select('#titre-desc').html('<br>');
         d3.select('#p-desc').html("Chacun des passagers a embarqué sur le titanic grâce à un billet. Ce dernier contient une suite de sept caractères alphanumériques.")
         toggleSvg(false);
     } else if (getTotalScroll() >= stepGap * 7 && getTotalScroll() < stepGap * 8) {
@@ -213,23 +213,23 @@ export function animate() {
     } else if (getTotalScroll() >= stepGap * 8 && getTotalScroll() < stepGap * 9) {
         console.log('STEP 6a: The unlucky one');
         d3.select('#titre-desc').html('Le malheureux élu');
-        d3.select('#p-desc').html("Le passager possédant le plus de chiffres 'portes-malheurs'.")
+        d3.select('#p-desc').html("Revenons à nos passagers de troisième classe.")
         toggleSvg(true);
         step6a();
     } else if (getTotalScroll() >= stepGap * 9 && getTotalScroll() < stepGap * 10) {
         console.log('STEP 6b: Title: The unlucky one');
         d3.select('#div-description').classed('hidden', true);
         d3.select('#bigText h1').classed('hidden', false);
-        d3.select('#bigText h1').text("Pour l'un d'eux, mourir sur le titanic était une évidence...");
-        d3.select('#titre-desc').html('Le malheureux élu');
-        d3.select('#p-desc').html("Le passager possédant le plus de chiffres 'portes-malheurs'.")
+        d3.select('#bigText h1').html("Pour l'un d'eux, mourir sur le titanic était une évidence...");
+        d3.select('#titre-desc').html('');
+        d3.select('#p-desc').html("")
         step6b();
     } else if (getTotalScroll() >= stepGap * 10 && getTotalScroll() < stepGap * 11) {
         console.log('STEP 6b: Describing the unlucky one');
         d3.select('#div-description').classed('hidden', true);
         d3.select('#bigText h1').classed('hidden', false);
         d3.select('#bigText p').classed('hidden', false);
-        d3.select('#bigText h1').text("Mr. Matti Rintamaki");
+        d3.select('#bigText h1').html("Mr. Matti Rintamaki");
         console.log(winner)
         d3.select('#bigText p').html("M. Matti est né en 1877, en Finlande. "
             + "Il est mort à l'âge de " + winner.age + " ans, dans la nuit du 14 au 15 avril 1912, suite au nauvrage du Titanic. "
@@ -241,18 +241,20 @@ export function animate() {
             + "<br>Il avait le billet numéro 3101273.");
         d3.select('#titre-desc').html('Le malheureux élu');
         d3.select('#p-desc').html("Le passager possédant le plus de chiffres 'portes-malheurs'.")
+        d3.select('#div-button').classed('hidden', true);
         step6b();
     } else if (getTotalScroll() >= stepGap * 11 && getTotalScroll() < stepGap * 12) {
         console.log('STEP 7');
         d3.select('#div-description').classed('hidden', true);
-        d3.select('#div-button').classed('hidden', true);
+        setTimeout(function () {
+            d3.select('#titre-desc').html('')
+            d3.select('#p-desc').html('')
+            d3.select('#div-button').classed('hidden', false);
+        }, 2000);
         step7();
     } else if (getTotalScroll() >= stepGap * 12 && getTotalScroll() < stepGap * 13) {
         console.log('STEP 8');
-        d3.select('#titre-desc').html('')
-        d3.select('#p-desc').html('')
-        d3.select('#div-button').classed('hidden', false);
-        step8();
+
     }
 }
 
@@ -683,11 +685,6 @@ function step7() {
             }
 
         })
-}
-
-// Le Titanic coule au fond de l'océan
-function step8() {
-    //
 }
 
 animate()

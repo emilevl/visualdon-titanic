@@ -66,11 +66,11 @@ let cy = 0
 // let diff = lastpoint - prempoint;
 // console.log('LA DIFF : ' + diff);
 
+
 for (let i = 0; i < compteurPassengers; i++) {
     //center the circles to the width and height
     cx = (i % 50) * 20 + (((width - (49 * 20))) / 2);
     // console.log(cx);
-
     cy = Math.floor(i / 50) * 20 + (((height - (26 * 20))) / 4);
     // console.log(cy);
 
@@ -96,6 +96,7 @@ let thirdClassTotal = 0;
 let thirdClassAlive = 0;
 let thirdClassDead = 0;
 let undefinedClass = 0;
+// Calculate all the passenger numbers
 titanic.forEach(passenger => {
     if (passenger.pclass === 1) {
         firstClassTotal++;
@@ -133,9 +134,10 @@ titanic.forEach(passenger => {
 // console.log('thirdClass : ' + thirdClassAlive + ' ont survécu et ' + thirdClassDead + ' sont décédés');
 // console.log(undefinedClass + ' undefinedClass');
 
+
+//////////// THE BIG ANIMATION FUNCTION: ALL STEPS ARE TESTED HERE AND THEN CALLED IN THE NEXT STEP ///////////////
 export function animate() {
     // console.log("total scroll", getTotalScroll());
-
     // Hide the cloud if needed
     if (!d3.select('#cloud').classed('hidden')) {
         d3.select('#cloud').classed('hidden', true);
@@ -157,51 +159,64 @@ export function animate() {
         document.getElementById('box').style.background = "hsl(213.15,100%,35.49%)";
     }
 
-    //  First step: the story
+    //  Step zero: the story
     if (getTotalScroll() < stepGap) {
-        console.log('transparent');
+        // console.log('transparent');
         d3.select('#titre-desc').html('Le grand départ');
         d3.select('#p-desc').html("Entre le 10 et le 12 avril 1912, 1310 passagers embarquent sur le Titanic à Southampton, Cherbourg puis Queenstown. Le bâteau quitte le Vieux-Continent direction les Amériques et, pour la plupart d'entre eux, le Rêve américain.")
         step0();
         document.getElementById('box').style.background
+        // 1st step: the passengers
     } else if (getTotalScroll() >= stepGap && getTotalScroll() < stepGap * 2) {
-        console.log('STEP 1: The Titanic');
+        // console.log('STEP 1: The Titanic');
         d3.select('#titre-desc').html('Le grand départ');
         d3.select('#p-desc').html("Entre le 10 et le 12 avril 1912, 1310 passagers embarquent sur le Titanic à Southampton, Cherbourg puis Queenstown. Le bâteau quitte le Vieux-Continent direction les Amériques et, pour la plupart d'entre eux, le Rêve américain.")
         step1();
+
+        // 2nd step: the passengers who didn't survive
     } else if (getTotalScroll() >= stepGap * 2 && getTotalScroll() < stepGap * 3) {
-        console.log('STEP 2: The death of the Titanic');
+        // console.log('STEP 2: The death of the Titanic');
         d3.select('#titre-desc').html('Une nuit en enfer');
         d3.select('#p-desc').html('Dans la nuit du 14 au 15 avril 1912, le Titanic heurte un iceberg et coule en à peine quelques heures. <br>Parmis tous les passagers, seulement ' + compteurPassengersSurvived + ' ont survécu. Les autres - <strong>que voici</strong> - meurent et ne reverront jamais la surface. Bousculades, morts de froid ou de noyade, tout le monde peut être touché.')
         step2();
+
+        // 3rd step (a): Death ordered by class
     } else if (getTotalScroll() >= stepGap * 3 && getTotalScroll() < stepGap * 4) {
-        console.log('STEP 3a: Class separation');
+        // console.log('STEP 3a: Class separation');
         d3.select('#titre-desc').html('Priorité aux femmes et aux enfants… mais surtout aux riches !');
         d3.select('#p-desc').html('Parmis les morts, la tendance est claire : <br>Voici la répartition des premières – à gauche, deuxièmes – au centre – et troisièmes – à droite – classes, proportionnellement. <br>')
         step3a();
+
+        // 3rd step (b): Death ordered by class, removing the first class
     } else if (getTotalScroll() >= stepGap * 4 && getTotalScroll() < stepGap * 5) {
-        console.log('STEP 3b: Removing first class');
+        // console.log('STEP 3b: Removing first class');
         d3.select('#titre-desc').html('Priorité aux femmes et aux enfants… mais surtout aux riches !');
         d3.select('#p-desc').html("Parmis les morts, la tendance est claire : <br>Voici la répartition des premières – à gauche, deuxièmes – au centre – et troisièmes – à droite – classes, proportionnellement. Alors qu'un tiers des premières classes ont trouvé la mort, le taux de décès en deuxième classe est d'environ 50%.")
         step3b();
+
+        // 3rd step (c): Death ordered by class, removing the second class
     } else if (getTotalScroll() >= stepGap * 5 && getTotalScroll() < stepGap * 6) {
-        console.log('STEP 3b: Removing 2nd class');
+        // console.log('STEP 3b: Removing 2nd class');
         d3.select('#titre-desc').html('Priorité aux femmes et aux enfants… mais surtout aux riches !');
         d3.select('#p-desc').html("Parmis les morts, la tendance est claire :"
             + "<br>Voici la répartition des premières – à gauche, deuxièmes – au centre – et troisièmes – à droite – classes, proportionnellement. "
             + "Alors qu'un tiers des premières classes ont trouvé la mort, le taux de décès en deuxième classe est d'environ 50%."
             + " Quant aux troisièmes classes, à peine une personne sur 6 avait une chance de survie.")
         step3c();
+
+        // 4th step: the unlucky characters
     } else if (getTotalScroll() >= stepGap * 6 && getTotalScroll() < stepGap * 7) {
-        console.log('STEP 4: Text: Et si tout était écrit?');
+        //console.log('STEP 4: Text: Et si tout était écrit?');
 
         d3.select('#bigText h1').classed('hidden', false);
         d3.select('#bigText h1').text('Et si tout était écrit ?');
         d3.select('#titre-desc').html('<br>');
         d3.select('#p-desc').html("Chacun des passagers a embarqué sur le titanic grâce à un billet. Ce dernier contient une suite de sept caractères alphanumériques.")
         toggleSvg(false);
+
+        // 5th step: the unlucky characters
     } else if (getTotalScroll() >= stepGap * 7 && getTotalScroll() < stepGap * 8) {
-        console.log('STEP 5: Unlucky characters');
+        // console.log('STEP 5: Unlucky characters');
         d3.select('#titre-desc').html('Caractères porte-malheurs');
         d3.select('#p-desc').html("Voici les caractères ayant le plus apporté la mort au propriétaire du billet")
         if (d3.select('#cloud').classed('hidden')) {
@@ -210,22 +225,28 @@ export function animate() {
         }
         toggleSvg(false);
         step5();
+        
+        // 6th step: the unlucky one
     } else if (getTotalScroll() >= stepGap * 8 && getTotalScroll() < stepGap * 9) {
-        console.log('STEP 6a: The unlucky one');
+        //console.log('STEP 6a: The unlucky one');
         d3.select('#titre-desc').html('Le malheureux élu');
         d3.select('#p-desc').html("Revenons à nos passagers de troisième classe.")
         toggleSvg(true);
         step6a();
+
+        // 6th step: the unlucky one
     } else if (getTotalScroll() >= stepGap * 9 && getTotalScroll() < stepGap * 10) {
-        console.log('STEP 6b: Title: The unlucky one');
+        //console.log('STEP 6b: Title: The unlucky one');
         d3.select('#div-description').classed('hidden', true);
         d3.select('#bigText h1').classed('hidden', false);
         d3.select('#bigText h1').html("Pour l'un d'eux, mourir sur le titanic était une évidence...");
         d3.select('#titre-desc').html('');
         d3.select('#p-desc').html("")
         step6b();
+
+        // 7th step: the unlucky one
     } else if (getTotalScroll() >= stepGap * 10 && getTotalScroll() < stepGap * 11) {
-        console.log('STEP 6b: Describing the unlucky one');
+        // console.log('STEP 6b: Describing the unlucky one');
         d3.select('#div-description').classed('hidden', true);
         d3.select('#bigText h1').classed('hidden', false);
         d3.select('#bigText p').classed('hidden', false);
@@ -243,6 +264,8 @@ export function animate() {
         d3.select('#p-desc').html("Le passager possédant le plus de chiffres 'portes-malheurs'.")
         d3.select('#div-button').classed('hidden', true);
         step6b();
+
+        // 7th step: ENDING
     } else if (getTotalScroll() >= stepGap * 11 && getTotalScroll() < stepGap * 12) {
         console.log('STEP 7');
         d3.select('#div-description').classed('hidden', true);
@@ -252,9 +275,6 @@ export function animate() {
             d3.select('#div-button').classed('hidden', false);
         }, 2000);
         step7();
-    } else if (getTotalScroll() >= stepGap * 12 && getTotalScroll() < stepGap * 13) {
-        console.log('STEP 8');
-
     }
 }
 

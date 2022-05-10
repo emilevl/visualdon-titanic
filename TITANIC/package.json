@@ -1,13 +1,13 @@
 {
-  "name": "02-intro-d3",
+  "name": "titanic-project",
   "version": "1.0.0",
-  "description": "Exercice 2",
+  "description": "L'histoire du Titanic et de ses passagers",
   "main": "src/index.js",
   "scripts": {
     "build": "babel src -d lib",
     "start": "webpack-dev-server"
   },
-  "author": "Noemi Romano",
+  "author": "Teo Dolci & Emile Vianney-Liaud",
   "license": "ISC",
   "dependencies": {
     "css-loader": "^6.7.1",

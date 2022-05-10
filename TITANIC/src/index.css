@@ -170,21 +170,6 @@ body {
 }
 
 
-@keyframes wave-text {
-  00% {
-    transform: translateY(0em);
-  }
-
-  60% {
-    transform: translateY(-0.1em);
-  }
-
-  100% {
-    transform: translateY(0em);
-  }
-}
-
-
 .stop-scroll {
   overflow: hidden;
 }
@@ -228,4 +213,48 @@ body {
   font-weight: lighter;
   transition: visibility 0.5s, opacity 0.5s linear;
   text-align: justify;
+}
+
+#mouse-scroll {
+  position: absolute;
+  top: 90%;
+  left: 50%;
+  width: 70px;
+  height: 70px;
+  fill: white;
+  animation: scroll-down 2s ease-in-out infinite;
+}
+
+#mouse-scroll:hover {
+  cursor: pointer;
+}
+
+/**** ANIMATIONS ****/
+
+@keyframes wave-text {
+  00% {
+    transform: translateY(0em);
+  }
+
+  60% {
+    transform: translateY(-0.1em);
+  }
+
+  100% {
+    transform: translateY(0em);
+  }
+}
+
+@keyframes scroll-down {
+  00% {
+    transform: translateY(0em);
+  }
+
+  60% {
+    transform: translateY(-0.1em);
+  }
+
+  100% {
+    transform: translateY(0em);
+  }
 }

@@ -4,7 +4,7 @@ import './lib/steps.js';
 import './lib/waves.js';
 import titanic from '../data/titanic.csv';
 import '../src/index.css';
-import { animate } from './lib/steps.js';
+import { animate, step0 } from './lib/steps.js';
 import { topFunction } from './lib/steps.js';
 
 setTimeout(function(){
@@ -73,6 +73,14 @@ function handleIntersect(entries, observer) {
     }
   });
 }
+
+document.getElementById('mouse-scroll').addEventListener('click', function () {
+  scroll = !scroll;
+  totalScroll = 0;
+  toggleScroll();
+  window.scrollTo(0, maxHeight)
+  animate();
+})
 
 export function toggleScroll() {
   if (!scroll) {

@@ -224,7 +224,7 @@ body {
 }
 
 #bigText p {
-  font-size: 0.8em;
+  font-size: 1.2rem;
   font-weight: lighter;
   transition: visibility 0.5s, opacity 0.5s linear;
   text-align: justify;

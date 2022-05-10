@@ -238,7 +238,7 @@ export function animate() {
             + "<br>Sa femme intente un procès civil pour homicide involontaire de la compagnie du Titanic. "
             + "En dédommagement, elle a reçu 375£ ce qui représentait environs 6 ans de salaire de son époux. À titre de comparaison, cela représenterait environs 55'000 francs suisses aujourd'hui. "
             + "<br>"
-            + "<br>Il avait le billet numéro 3101273");
+            + "<br>Il avait le billet numéro 3101273.");
         d3.select('#titre-desc').html('Le malheureux élu');
         d3.select('#p-desc').html("Le passager possédant le plus de chiffres 'portes-malheurs'.")
         step6b();

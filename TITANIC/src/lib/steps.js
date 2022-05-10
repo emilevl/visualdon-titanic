@@ -1,6 +1,6 @@
 import * as d3 from 'd3';
 import titanic from '../../data/titanic.csv';
-import { toggleScroll, getTotalScroll, setTotalScroll, stepGap, scroll } from '../index.js';
+import { toggleScroll, getTotalScroll, setTotalScroll, stepGap, scroll, variation } from '../index.js';
 import { step5, getTicketWithMostOccurences, getSixBiggestNumber, nbOccurences } from './luckyNumbers.js';
 setTotalScroll(20000);
 
@@ -13,6 +13,7 @@ let margin = { top: 10, right: 20, bottom: 30, left: 50 },
     width = window.innerWidth,
     height = window.innerHeight;
 let step = 0;
+let goUpBtnShown = false;
 
 let compteurPassengers = 0
 let compteurPassengersSurvived = 0
@@ -264,16 +265,20 @@ export function animate() {
         d3.select('#p-desc').html("Le passager possédant le plus de chiffres 'portes-malheurs'.")
         d3.select('#div-button').classed('hidden', true);
         step6b();
+        goUpBtnShown = false;
 
         // 7th step: ENDING
     } else if (getTotalScroll() >= stepGap * 11 && getTotalScroll() < stepGap * 12) {
         console.log('STEP 7');
         d3.select('#div-description').classed('hidden', true);
-        setTimeout(function () {
-            d3.select('#titre-desc').html('')
-            d3.select('#p-desc').html('')
-            d3.select('#div-button').classed('hidden', false);
-        }, 2000);
+        d3.select('#titre-desc').html('')
+        d3.select('#p-desc').html('')
+        if (!goUpBtnShown) {
+            goUpBtnShown = true;
+            setTimeout(function () {
+                d3.select('#div-button').classed('hidden', false);
+            }, 2000);
+        }
         step7();
     }
 }

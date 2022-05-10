@@ -15,6 +15,7 @@ setTimeout(function(){
 // console.log(maxHeight);
 export let scroll = true;
 const maxHeight = window.innerHeight;
+export let variation;
 
 // console.log(maxHeight)
 let numSteps = 20.0;
@@ -104,7 +105,7 @@ document.addEventListener("wheel", function (e) {
   let TopScroll = window.pageYOffset || document.documentElement.scrollTop;
   let LeftScroll = window.pageXOffset || document.documentElement.scrollLeft;
   // to make it work on IE or Chrome
-  let variation = parseInt(e.deltaY);
+  variation = parseInt(e.deltaY);
     totalScroll += variation;
 
   // console.log("totalScroll: " + totalScroll);

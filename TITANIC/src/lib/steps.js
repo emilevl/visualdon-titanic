@@ -254,7 +254,7 @@ export function animate() {
         d3.select('#bigText h1').html("Mr. Matti Rintamaki");
         console.log(winner)
         d3.select('#bigText p').html("M. Matti est né en 1877, en Finlande. "
-            + "Il est mort à l'âge de " + winner.age + " ans, dans la nuit du 14 au 15 avril 1912, suite au nauvrage du Titanic. "
+            + "Il est mort à l'âge de " + winner.age + " ans, dans la nuit du 14 au 15 avril 1912, suite au naufrage du Titanic. "
             + "Matti laisse derrière lui sa femme, Maria Sofia, née Mäki, et ses 9 enfants. Son corps n'a jamais été retrouvé."
             + "<br>"
             + "<br>Sa femme intente un procès civil pour homicide involontaire de la compagnie du Titanic. "

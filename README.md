@@ -42,5 +42,8 @@ Les idées que nous avons sont les suivantes:
 
 Durant le projet, nous aurons l'opportunité de voir quels solutions sont réalisables et peut-être que nous en découvrirons de nouvelles qui seront encore plus intéressantes.
 
+## Présentation
+Notre présentation réalisée pour le projet, dans le cadre du cours: [Titanic - Canva](https://www.canva.com/design/DAFAS_DTVmg/0gUBvBqh0ErnvUqD0ikXDg/view?utm_content=DAFAS_DTVmg&utm_campaign=designshare&utm_medium=link&utm_source=homepage_design_menu)
+
 ## Références
 Nous allons nous inspirer notamment de ce site web qui a déjà pu raconter une histoire sur ces données: [bmdata.co](http://www.bmdata.co.uk/titanic/)

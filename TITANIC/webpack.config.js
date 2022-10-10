@@ -1,4 +1,5 @@
-const path = require('path');const HtmlWebpackPlugin = require('html-webpack-plugin');
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
@@ -7,10 +8,14 @@ const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
     inject: 'body'
 })
 
-module.exports = {
+module.exports = (env) => {
+  return {
     name: 'browser',
-    mode: 'development',
+    mode: 'production',
     entry: './src/index.js',
+    devServer: {
+      port: 'auto',
+    },
       // Extract css to separate file
 
     output: {
@@ -37,4 +42,5 @@ module.exports = {
         ]
     },
     plugins: [HtmlWebpackPluginConfig, new MiniCssExtractPlugin()]
+  }
 }

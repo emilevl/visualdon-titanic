@@ -11,7 +11,7 @@ const HtmlWebpackPluginConfig = new HtmlWebpackPlugin({
 module.exports = (env) => {
   return {
     name: 'browser',
-    mode: 'production',
+    mode: 'development',
     entry: './src/index.js',
     devServer: {
       port: 'auto',

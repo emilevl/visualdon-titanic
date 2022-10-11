@@ -1,0 +1,260 @@
+body::-webkit-scrollbar {
+  display: none;
+}
+
+body {
+  overflow-y: scroll;
+  overflow-x: hidden;
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+  margin: 0;
+  justify-content: center;
+  align-items: center;
+  font-size: 2em;
+  font-family: 'Montserrat', sans-serif;
+  font-weight: bold;
+}
+
+#box {
+  background-color: hsl(213.15,100%,35.49%);
+  border: 0px solid rgb(20, 20, 120);
+  transition: background-color 1s, border 1s;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* padding: 20px; */
+  margin: 0;
+  position: relative;
+  /* background: linear-gradient(180deg, rgba(0, 81, 181, 1) 0%, rgba(0, 40, 175, 1) 50%, rgba(0, 0, 100, 1) 100%) no-repeat; */
+}
+
+#box.full-screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999
+}
+
+#titanic-waves {
+  margin-top: -600px;
+  margin-bottom: -40px;
+}
+
+#boat {
+  transform-box: fill-box;
+  transform-origin: center;
+  transform: rotate(2deg);
+}
+
+.iceberg {
+  transform-origin: center;
+  transform: scale(0.4);
+  transform-origin: 20% 60%;
+}
+
+/* SVG full screen*/
+#svg-allPassengers, #cloud {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+#div-description {
+  position: absolute;
+  width: 60%;
+  min-width: 980px;
+  display: block;
+  top: 75%;
+  text-align: left;
+  font-family: FreeMono, monospace;
+  color: white;
+  margin: 0;
+  padding-top: 10px;
+}
+
+#titre-desc {
+  font-size: 0.7em;
+  font-variant: all-petite-caps;
+}
+
+#p-desc {
+    font-size: 0.5em;
+    /* font-variant: all-petite-caps; */
+    font-weight: lighter;
+}
+
+#cloud:not(.hidden) {
+  opacity: 1;
+  visibility: visible;
+  transition: visibility 0s, opacity 0.5s linear;
+}
+
+#topButton {
+  z-index: 99;
+  position:absolute;
+  top: 40%;
+  left: 37%;
+  color: white;
+  font-family: FreeMono, monospace;
+  padding: 0.7em 1.7em;
+  font-size: 18px;
+  border-radius: 0.5em;
+  background: transparent;
+  border: 1px solid white;
+  transition: all .3s;
+  /* box-shadow: 6px 6px 12px rgb(20, 0, 200),
+              -6px -6px 12px #587FCC; */
+}
+
+#topButton:hover {
+  border: 2px solid white;
+}
+
+#topButton:active {
+  /* box-shadow: 4px 4px 12px rgb(20, 0, 200),
+  -4px -4px 12px #587FCC; */
+  border: 4px solid white;
+}
+
+.hidden {
+  visibility:hidden;
+  opacity: 0;
+  transition: visibility 0.5s, opacity 0.5s linear;
+}
+
+.logo.is-animation {
+  margin-top: 0.6em;
+  text-align: center;
+  margin-bottom: 0.5vw;
+}
+
+.logo.is-animation span {
+  display: inline-block;
+  font-size: 15vw;
+  animation: wave-text 2s ease-in-out infinite;
+}
+
+.logo.is-animation span:nth-of-type(1) {
+  animation-delay: 0s;
+}
+
+.logo.is-animation span:nth-of-type(2) {
+  animation-delay: 0.1s;
+}
+
+.logo.is-animation span:nth-of-type(3) {
+  animation-delay: 0.2s;
+}
+
+.logo.is-animation span:nth-of-type(4) {
+  animation-delay: 0.3s;
+}
+
+.logo.is-animation span:nth-of-type(5) {
+  animation-delay: 0.4s;
+}
+
+.logo.is-animation span:nth-of-type(6) {
+  animation-delay: 0.5s;
+}
+
+.logo.is-animation span:nth-of-type(7) {
+  animation-delay: 0.6s;
+}
+
+
+.stop-scroll {
+  overflow: hidden;
+}
+
+.vertical {
+  color: white;
+  font: 32px "Arial";
+}
+
+.extra {
+  width: 350px;
+  height: 350px;
+  margin-top: 10px;
+  border: 0px solid rgb(20, 20, 120);
+  text-align: center;
+  /* padding: 20px; */
+  margin: 0;
+}
+
+#bigText {
+  position: absolute;
+  width: 60%;
+  min-width: 980px;
+  display: block;
+  top: 30%;
+  font-family: FreeMono, monospace;
+  color: white;
+  margin: 0;
+  padding-top: 10px;
+}
+
+#bigText h1 {
+  font-size: 2.5em;
+  font-variant: all-petite-caps;
+  transition: visibility 0.5s, opacity 0.5s linear;
+  text-align: center;
+}
+
+#bigText p {
+  font-size: 1.2rem;
+  font-weight: lighter;
+  transition: visibility 0.5s, opacity 0.5s linear;
+  text-align: justify;
+}
+
+#mouse-scroll {
+  position: absolute;
+  top: 90%;
+  left: 50%;
+  width: 70px;
+  height: 70px;
+  fill: white;
+  animation: scroll-down 2s ease-in-out infinite;
+}
+
+#mouse-scroll:hover {
+  cursor: pointer;
+}
+
+/**** ANIMATIONS ****/
+
+@keyframes wave-text {
+  00% {
+    transform: translateY(0em);
+  }
+
+  60% {
+    transform: translateY(-0.1em);
+  }
+
+  100% {
+    transform: translateY(0em);
+  }
+}
+
+@keyframes scroll-down {
+  00% {
+    transform: translateY(0em);
+  }
+
+  60% {
+    transform: translateY(-0.1em);
+  }
+
+  100% {
+    transform: translateY(0em);
+  }
+}
